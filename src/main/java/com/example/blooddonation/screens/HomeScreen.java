@@ -13,7 +13,7 @@ public class HomeScreen {
     public HomeScreen() {
         // HomeScreen with navigation items to another parts of app.
         homeScreen = new HBox(100);
-        homeScreen.setStyle("-fx-background-color: yellow");
+//        homeScreen.setStyle("-fx-background-color: yellow");
         homeScreen.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         homeScreen.setAlignment(Pos.CENTER);
 //        homeScreen.setHgap(100);
@@ -30,11 +30,12 @@ public class HomeScreen {
     public VBox createNavItem(String title){
         // New item
         VBox navItem = new VBox();
+        navItem.setAlignment(Pos.CENTER);
 
         // Label with text and background
         Label navBackground = new Label(title);
         // Styling
-        navBackground.setStyle("-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 24; -fx-background-color: #E80000;");
+        navBackground.setStyle("-fx-cursor: hand; -fx-font-family: 'Inter'; -fx-font-weight: bold; -fx-font-size: 24; -fx-background-color: #E80000;");
         navBackground.setAlignment(Pos.CENTER);
         // Size
         navBackground.setPrefSize(200, 150);
