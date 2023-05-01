@@ -4,16 +4,19 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class HomeScreen {
-    private GridPane homeScreen;
+    private HBox homeScreen;
     public HomeScreen() {
         // HomeScreen with navigation items to another parts of app.
-        homeScreen = new GridPane();
+        homeScreen = new HBox(100);
+        homeScreen.setStyle("-fx-background-color: yellow");
         homeScreen.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        homeScreen.setHgap(100);
+        homeScreen.setAlignment(Pos.CENTER);
+//        homeScreen.setHgap(100);
 
         // Nav items
         VBox nav1 = createNavItem("Donors");
@@ -21,26 +24,26 @@ public class HomeScreen {
         VBox nav3 = createNavItem("Hospitals");
 
         // Add them to GridPane
-        homeScreen.add(nav1, 0, 0);
-        homeScreen.add(nav2, 1, 0);
-        homeScreen.add(nav3, 2, 0);
+        homeScreen.getChildren().addAll(nav1, nav2, nav3);
     }
 
     public VBox createNavItem(String title){
+        // New item
         VBox navItem = new VBox();
-        navItem.setPrefSize(130, 240);
 
-        Label navTitle = new Label(title);
-        Label navBackground = new Label();
-        navBackground.setStyle("-fx-background-color: lightgray");
-        navBackground.setPrefSize(130, 180);
-
-        navItem.getChildren().addAll(navBackground, navTitle);
+        // Label with text and background
+        Label navBackground = new Label(title);
+        // Styling
+        navBackground.setStyle("-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 24; -fx-background-color: #E80000;");
+        navBackground.setAlignment(Pos.CENTER);
+        // Size
+        navBackground.setPrefSize(200, 150);
+        navItem.getChildren().addAll(navBackground);
 
         return navItem;
     }
 
-    public GridPane getHomeScreen(){
+    public HBox getHomeScreen(){
         return homeScreen;
     }
 }
