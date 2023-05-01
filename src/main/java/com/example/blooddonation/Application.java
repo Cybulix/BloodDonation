@@ -1,9 +1,11 @@
 package com.example.blooddonation;
 
+import com.example.blooddonation.screens.HomeScreen;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -26,10 +28,12 @@ public class Application extends javafx.application.Application {
         top.getChildren().add(appName);
         root.setTop(top);
 
-        // Mid Part of border pane
+        // Mid-Part of border pane
+        root.setCenter(new HomeScreen().getHomeScreen());
 
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, 1200, 700);
         stage.setTitle("Blood Donation");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
