@@ -47,6 +47,10 @@ public class HospitalsScreen {
         hospitalContent.add(lbl2, 0, 1);
         hospitalContent.add(lbl3, 0, 2);
 
+        /// Tableview
+
+
+
         // Add layouts to borderpane
         contentPane.setTop(top);
         contentPane.setCenter(hospitalContent);
