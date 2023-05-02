@@ -13,10 +13,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Application extends javafx.application.Application {
+    public BorderPane root;
+    public StackPane midPane = new StackPane();
+
     @Override
     public void start(Stage stage) throws IOException {
         // New border pane for content
-        BorderPane root = new BorderPane();
+        root = new BorderPane();
 
         // Top part of border pane
         HBox top = new HBox();
@@ -36,7 +39,7 @@ public class Application extends javafx.application.Application {
         // resize image, while keeping aspect ratio
         nurseImage.setFitHeight(300);
         nurseImage.setPreserveRatio(true);
-        StackPane midPane = new StackPane();
+
         midPane.setAlignment(Pos.BOTTOM_RIGHT);
         midPane.setStyle("-fx-background-color: transparent;");
         midPane.getChildren().addAll(new HomeScreen(root).getHomeScreen(), nurseImage);
@@ -64,5 +67,10 @@ public class Application extends javafx.application.Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public void returnHome(){
+        // Function to return to home screen, from another screen. Without going to needlesly send a bunch of data.
+        root.setCenter(this.midPane);
     }
 }

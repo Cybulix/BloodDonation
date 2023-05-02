@@ -1,5 +1,6 @@
 package com.example.blooddonation.screens;
 
+import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -26,6 +27,8 @@ public class HospitalsScreen {
         HBox top = new HBox();
         // Button to return to Home Screen
         Button returnButton = new Button("Return");
+        returnButton.setOnAction(e -> new Application().returnHome());
+
         top.getChildren().add(returnButton);
 
         // Main content
@@ -43,14 +46,15 @@ public class HospitalsScreen {
         contentPane.setTop(top);
         contentPane.setCenter(hospitalContent);
 
-        hospitalScreen.getChildren().add(contentPane);
-
         // Bottom Right image
         Image image = new Image(getClass().getResource("/images/Render_1.png").toExternalForm());
         ImageView nurseImage = new ImageView(image);
         // resize image, while keeping aspect ratio
         nurseImage.setFitHeight(300);
         nurseImage.setPreserveRatio(true);
+
+        hospitalScreen.getChildren().addAll(contentPane, nurseImage);
+        StackPane.setAlignment(nurseImage, Pos.BOTTOM_RIGHT);
     }
 
     public StackPane getHospitalScreen() {
