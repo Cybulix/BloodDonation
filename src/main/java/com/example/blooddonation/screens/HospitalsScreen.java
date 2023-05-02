@@ -54,15 +54,30 @@ public class HospitalsScreen {
         // Main content
         /// Tableview
         TableView hospitalTable = new TableView<Hospital>();
+        // Table columns
         TableColumn idColumn = new TableColumn<Hospital, Integer>("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<Hospital, Integer>("id"));
 
         TableColumn nameColumn = new TableColumn<Hospital, String>("Name");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("name"));
+
+        TableColumn cityColumn = new TableColumn<Hospital, String>("City");
+        cityColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("city"));
+
+        TableColumn adresColumn = new TableColumn<Hospital, String>("Adres");
+        adresColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("adres"));
+
+        TableColumn postalCodeColumn = new TableColumn<Hospital, String>("PostalCode");
+        postalCodeColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("postalCode"));
+
+        TableColumn phoneNumberColumn = new TableColumn<Hospital, String>("PhoneNumber");
+        phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("phoneNumber"));
+
+        TableColumn emailColumn = new TableColumn<Hospital, String>("Email");
+        emailColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("email"));
 
         // Add columns to table
-        hospitalTable.getColumns().add(idColumn);
-        hospitalTable.getColumns().add(nameColumn);
+        hospitalTable.getColumns().addAll(idColumn, nameColumn, cityColumn, adresColumn, postalCodeColumn, phoneNumberColumn, emailColumn);
 
         // Get rid of empty column
         hospitalTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -77,8 +92,6 @@ public class HospitalsScreen {
                 String hospitalName = rs.getString("name");
 
                 Hospital hospital = new Hospital(rs);
-                System.out.println(hospital.getId());
-                System.out.println(hospital.getName());
                 hospitalTable.getItems().add(hospital);
             }
         } catch (SQLException e) {
