@@ -1,6 +1,5 @@
 package com.example.blooddonation.screens;
 
-import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -14,10 +13,12 @@ import javafx.scene.layout.StackPane;
 
 public class HospitalsScreen {
     private StackPane hospitalScreen;
-
+    private BorderPane root;
     public Database db;
 
-    public HospitalsScreen(){
+    public HospitalsScreen(BorderPane rootBorderPane){
+        // Get borderPane from Application class
+        root = rootBorderPane;
         // StackPane to place image on top of content
         hospitalScreen = new StackPane();
         // Layout for Content
@@ -27,7 +28,7 @@ public class HospitalsScreen {
         HBox top = new HBox();
         // Button to return to Home Screen
         Button returnButton = new Button("Return");
-        returnButton.setOnAction(e -> new Application().returnHome());
+        returnButton.setOnAction(e -> root.setCenter(new HomeScreen(root).getHomeContent()));
 
         top.getChildren().add(returnButton);
 

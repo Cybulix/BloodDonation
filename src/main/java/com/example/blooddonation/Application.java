@@ -14,8 +14,7 @@ import java.io.IOException;
 
 public class Application extends javafx.application.Application {
     public BorderPane root;
-    public StackPane midPane = new StackPane();
-
+    public StackPane midPane;
     @Override
     public void start(Stage stage) throws IOException {
         // New border pane for content
@@ -32,20 +31,9 @@ public class Application extends javafx.application.Application {
         // Add elements to top of borderpane
         top.getChildren().add(appName);
         root.setTop(top);
-
-        // Mid-Part of border pane
-        Image image = new Image(getClass().getResource("/images/Render_1.png").toExternalForm());
-        ImageView nurseImage = new ImageView(image);
-        // resize image, while keeping aspect ratio
-        nurseImage.setFitHeight(300);
-        nurseImage.setPreserveRatio(true);
-
-        midPane.setAlignment(Pos.BOTTOM_RIGHT);
-        midPane.setStyle("-fx-background-color: transparent;");
-        midPane.getChildren().addAll(new HomeScreen(root).getHomeScreen(), nurseImage);
-
+        
         // Get first starting screen
-        root.setCenter(midPane);
+        root.setCenter(new HomeScreen(root).getHomeContent());
 
         // Bottom of Screen
         HBox bottomPane = new HBox();
@@ -67,10 +55,5 @@ public class Application extends javafx.application.Application {
 
     public static void main(String[] args) {
         launch();
-    }
-
-    public void returnHome(){
-        // Function to return to home screen, from another screen. Without going to needlesly send a bunch of data.
-        root.setCenter(this.midPane);
     }
 }
