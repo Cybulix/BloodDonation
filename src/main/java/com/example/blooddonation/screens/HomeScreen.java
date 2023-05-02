@@ -1,5 +1,6 @@
 package com.example.blooddonation.screens;
 
+import com.example.blooddonation.Database;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -7,9 +8,12 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
+import java.sql.SQLException;
+
 public class HomeScreen {
     private HBox homeScreen;
     private BorderPane root;
+    public Database db;
     public HomeScreen(BorderPane rootBorderPane) {
         // Get borderPane from Application class/file
         root = rootBorderPane;
@@ -27,6 +31,12 @@ public class HomeScreen {
 
         // Add them to GridPane
         homeScreen.getChildren().addAll(nav1, nav2, nav3);
+
+        try{
+            db = new Database();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public VBox createNavItem(String title){
@@ -47,7 +57,12 @@ public class HomeScreen {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 System.out.println(title);
-                root.setCenter(null);
+//                root.setCenter(null);
+                try {
+                    db.getData();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
             }
         };
 
