@@ -18,4 +18,8 @@ public class Database {
             System.out.println(rs.getInt("id"));
         }
     }
+
+    public ResultSet getHospitalData() throws SQLException{
+        return stm.executeQuery("SELECT * FROM hospitals");
+    }
 }

@@ -1,13 +1,21 @@
 package com.example.blooddonation.screens;
 
 import com.example.blooddonation.Database;
+import com.example.blooddonation.models.Hospital;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class HospitalsScreen {
     private StackPane hospitalScreen;
@@ -21,6 +29,13 @@ public class HospitalsScreen {
         hospitalScreen = new StackPane();
         // Layout for Content
         BorderPane contentPane = new BorderPane();
+
+        // Connect to DB
+        try{
+            db = new Database();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         // Top part of layout
         HBox top = new HBox();
@@ -37,23 +52,42 @@ public class HospitalsScreen {
         top.getChildren().add(returnButton);
 
         // Main content
-        GridPane hospitalContent = new GridPane();
-
-        Label lbl1 = new Label("Bravis 1");
-        Label lbl2 = new Label("Bravis 2");
-        Label lbl3 = new Label("Bravis 3");
-
-        hospitalContent.add(lbl1, 0, 0);
-        hospitalContent.add(lbl2, 0, 1);
-        hospitalContent.add(lbl3, 0, 2);
-
         /// Tableview
+        TableView hospitalTable = new TableView<Hospital>();
+        TableColumn idColumn = new TableColumn<Hospital, Integer>("ID");
+        idColumn.setCellValueFactory(new PropertyValueFactory<Hospital, Integer>("id"));
 
+        TableColumn nameColumn = new TableColumn<Hospital, String>("Name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
+        // Add columns to table
+        hospitalTable.getColumns().add(idColumn);
+        hospitalTable.getColumns().add(nameColumn);
 
-        // Add layouts to borderpane
+        // Get rid of empty column
+        hospitalTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+//        hospitalTable.getItems().addAll();
+
+        try{
+            ResultSet rs = db.getHospitalData();
+
+            while (rs.next()){
+                Integer hospitalId = rs.getInt("id");
+                String hospitalName = rs.getString("name");
+
+                Hospital hospital = new Hospital(rs);
+                System.out.println(hospital.getId());
+                System.out.println(hospital.getName());
+                hospitalTable.getItems().add(hospital);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Add elements/panes to borderpane
         contentPane.setTop(top);
-        contentPane.setCenter(hospitalContent);
+        contentPane.setCenter(hospitalTable);
 
         // Bottom Right image
         Image image = new Image(getClass().getResource("/images/Render_1.png").toExternalForm());
