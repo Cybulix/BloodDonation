@@ -1,15 +1,13 @@
 package com.example.blooddonation.screens;
 
 import com.example.blooddonation.Database;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 
 public class HospitalsScreen {
     private StackPane hospitalScreen;
@@ -26,8 +24,14 @@ public class HospitalsScreen {
 
         // Top part of layout
         HBox top = new HBox();
+        top.setAlignment(Pos.TOP_RIGHT);
         // Button to return to Home Screen
         Button returnButton = new Button("Return");
+        returnButton.setStyle("-fx-background-color: #FEE7ED; -fx-cursor: hand; -fx-border-width: 1px; -fx-border-color: black;");
+        returnButton.setPadding(new Insets(10, 20, 10, 20));
+        HBox.setMargin(returnButton, new Insets(5, 80, 0, 0));
+
+        // Return onclick to home screen
         returnButton.setOnAction(e -> root.setCenter(new HomeScreen(root).getHomeContent()));
 
         top.getChildren().add(returnButton);

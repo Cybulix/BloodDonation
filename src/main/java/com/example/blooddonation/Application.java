@@ -31,7 +31,7 @@ public class Application extends javafx.application.Application {
         // Add elements to top of borderpane
         top.getChildren().add(appName);
         root.setTop(top);
-        
+
         // Get first starting screen
         root.setCenter(new HomeScreen(root).getHomeContent());
 
