@@ -56,13 +56,7 @@ public class HomeScreen {
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                System.out.println(title);
-//                root.setCenter(null);
-                try {
-                    db.getData();
-                } catch (SQLException e){
-                    e.printStackTrace();
-                }
+                root.setCenter(new HospitalsScreen().getHospitalScreen());
             }
         };
 
