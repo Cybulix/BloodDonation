@@ -44,7 +44,7 @@ public class HospitalsScreen {
         Button returnButton = new Button("Return");
         returnButton.setStyle("-fx-background-color: #FEE7ED; -fx-cursor: hand; -fx-border-width: 1px; -fx-border-color: black;");
         returnButton.setPadding(new Insets(10, 20, 10, 20));
-        HBox.setMargin(returnButton, new Insets(5, 80, 0, 0));
+        HBox.setMargin(returnButton, new Insets(3, 80, 3, 0));
 
         // Return onclick to home screen
         returnButton.setOnAction(e -> root.setCenter(new HomeScreen(root).getHomeContent()));
@@ -82,16 +82,14 @@ public class HospitalsScreen {
         // Get rid of empty column
         hospitalTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-//        hospitalTable.getItems().addAll();
 
         try{
+            // Get data from Database
             ResultSet rs = db.getHospitalData();
-
             while (rs.next()){
-                Integer hospitalId = rs.getInt("id");
-                String hospitalName = rs.getString("name");
-
+                // Create new object for each hospital
                 Hospital hospital = new Hospital(rs);
+                // Insert into table
                 hospitalTable.getItems().add(hospital);
             }
         } catch (SQLException e) {
