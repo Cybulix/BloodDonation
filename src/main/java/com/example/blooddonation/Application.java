@@ -39,7 +39,7 @@ public class Application extends javafx.application.Application {
         StackPane midPane = new StackPane();
         midPane.setAlignment(Pos.BOTTOM_RIGHT);
         midPane.setStyle("-fx-background-color: transparent;");
-        midPane.getChildren().addAll(new HomeScreen().getHomeScreen(), nurseImage);
+        midPane.getChildren().addAll(new HomeScreen(root).getHomeScreen(), nurseImage);
 
         // Get first starting screen
         root.setCenter(midPane);
@@ -49,12 +49,11 @@ public class Application extends javafx.application.Application {
         bottomPane.setPrefWidth(Double.MAX_VALUE);
         bottomPane.setAlignment(Pos.CENTER_RIGHT);
         bottomPane.setStyle("-fx-background-color: #E80000");
+        // Copyright text
         Label copyRight = new Label("\u00A9Cybul 2023");
         copyRight.setPadding(new Insets(5, 30, 5, 0));
         bottomPane.getChildren().add(copyRight);
         root.setBottom(bottomPane);
-
-//        root.setBottom(midPane);
 
         Scene scene = new Scene(root, 1200, 700);
         stage.setTitle("Blood Donation");
