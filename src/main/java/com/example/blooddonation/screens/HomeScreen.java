@@ -2,8 +2,11 @@ package com.example.blooddonation.screens;
 
 import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,11 +24,25 @@ public class HomeScreen {
         // Get borderPane from Application class/file
         root = rootBorderPane;
         // HomeScreen with navigation items to another parts of app.
+        // Combobox to select active worker
+        Label selectionLabel = new Label("Select current Worker:");
+        selectionLabel.setAlignment(Pos.CENTER);
+        ComboBox workerSelection = new ComboBox<>();
+        ObservableList<String> testList = workerSelection.getItems();
+        testList.addAll("Worker 1", "Worker 2", "Worker 3", "Worker 4");
+
+        // Wrap label and combobox together
+        HBox workerPane = new HBox(5);
+        workerPane.getChildren().addAll(selectionLabel, workerSelection);
+        // Adjust Some positioning
+        workerPane.setAlignment(Pos.TOP_RIGHT);
+        workerPane.setPadding(new Insets(10, 25, 0, 0));
+        selectionLabel.setPadding(new Insets(5, 0, 0, 0));
+        StackPane.setAlignment(workerPane, Pos.TOP_RIGHT);
+
         homeContent = new HBox(100);
-//        homeScreen.setStyle("-fx-background-color: yellow");
         homeContent.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         homeContent.setAlignment(Pos.CENTER);
-//        homeScreen.setHgap(100);
 
         // Nav items
         VBox nav1 = createNavItem("Donors");
@@ -42,7 +59,7 @@ public class HomeScreen {
         homeScreen.setAlignment(Pos.BOTTOM_RIGHT);
         homeScreen.setStyle("-fx-background-color: transparent;");
 
-        homeScreen.getChildren().addAll(homeContent, nurseImage);
+        homeScreen.getChildren().addAll(homeContent, nurseImage, workerPane);
         // Test DB
         try{
             db = new Database();
