@@ -3,6 +3,7 @@ package com.example.blooddonation.screens;
 import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,12 +25,20 @@ public class HomeScreen {
         // Get borderPane from Application class/file
         root = rootBorderPane;
         // Worker selection box
-        ComboBox workerSelection = new ComboBox<>();
+        ComboBox<String> workerSelection = new ComboBox<>();
+        workerSelection.setPromptText("Select current Worker");
         ObservableList<String> workerList = workerSelection.getItems();
         workerList.addAll("Worker 1", "Worker 2", "Worker 3", "Worker 4");
         // Positioning
         StackPane.setAlignment(workerSelection, Pos.TOP_RIGHT);
-        StackPane.setMargin(workerSelection, new Insets(10, 60, 0 , 0));
+        StackPane.setMargin(workerSelection, new Insets(10, 40, 0 , 0));
+        // Functionality
+        workerSelection.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println(workerSelection.valueProperty().get());
+            }
+        });
 
         // HomeScreen with navigation items to another parts of app.
         homeContent = new HBox(100);
