@@ -47,7 +47,7 @@ public class Application extends javafx.application.Application {
         root.setBottom(bottomPane);
 
         Scene scene = new Scene(root, 1200, 700);
-        stage.setTitle("Blood Donation");
+        stage.setTitle("");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();

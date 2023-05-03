@@ -6,6 +6,7 @@ import com.example.blooddonation.models.Hospital;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -37,18 +38,30 @@ public class HospitalsScreen {
         }
 
         // Top part of layout
-        HBox top = new HBox();
-        top.setAlignment(Pos.TOP_RIGHT);
+        StackPane top = new StackPane();
+        HBox topLeft = new HBox();
+        HBox topRight = new HBox();
+        topRight.setAlignment(Pos.TOP_RIGHT);
+        // Hospital Screen Label
+        Label hospitalLabel = new Label("Hospitals");
+        hospitalLabel.setStyle("-fx-font-family: 'Inter'; -fx-font-weight: bold; -fx-font-size: 20;");
+        hospitalLabel.setPadding(new Insets(10, 20, 10, 20));
+        topLeft.getChildren().add(hospitalLabel);
+
         // Button to return to Home Screen
         Button returnButton = new Button("Return");
         returnButton.setStyle("-fx-background-color: #FEE7ED; -fx-cursor: hand; -fx-border-width: 1px; -fx-border-color: black;");
         returnButton.setPadding(new Insets(10, 20, 10, 20));
+        topRight.getChildren().add(returnButton);
+
+        // Set margins
+        HBox.setMargin(hospitalLabel, new Insets(0, 0, 0, 40));
         HBox.setMargin(returnButton, new Insets(3, 80, 3, 0));
 
         // Return onclick to home screen
         returnButton.setOnAction(e -> root.setCenter(new HomeScreen(root).getHomeContent()));
 
-        top.getChildren().add(returnButton);
+        top.getChildren().addAll(topLeft, topRight);
 
         // Main content
         /// Tableview
