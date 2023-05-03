@@ -22,4 +22,7 @@ public class Database {
     public ResultSet getHospitalData() throws SQLException{
         return stm.executeQuery("SELECT * FROM hospitals");
     }
+    public ResultSet getWorkersData() throws SQLException{
+        return stm.executeQuery("SELECT * FROM workers");
+    }
 }

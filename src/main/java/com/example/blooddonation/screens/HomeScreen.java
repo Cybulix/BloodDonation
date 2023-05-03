@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +32,25 @@ public class HomeScreen {
 
         // Workers List
         List<Worker> workers = new ArrayList<>();
-        workers.add(new Worker(1, "John", "Doe", "123-456-7890", "john.doe@example.com"));
-        workers.add(new Worker(2, "Jane", "Doe", "123-456-7891", "jane.doe@example.com"));
+        // Connect with DB, and get workers data
+        try{
+            db = new Database();
+            ResultSet rs = db.getWorkersData();
+            while (rs.next()){
+                // Create new object
+                Worker worker = new Worker(rs);
+                // Insert worker object into combobox
+                workers.add(worker);
+            }
+        } catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
         // Worker selection box
         ComboBox<String> workerSelection = new ComboBox<>();
         workerSelection.setPromptText("Select current Worker");
         ObservableList<String> workersList = FXCollections.observableArrayList();
+        // Loop through the list of workers and add their full names to the ObservableList
         for (Worker worker : workers){
             workersList.add(worker.getFullName());
         }
@@ -47,11 +61,19 @@ public class HomeScreen {
         // Positioning
         StackPane.setAlignment(workerSelection, Pos.TOP_RIGHT);
         StackPane.setMargin(workerSelection, new Insets(10, 40, 0 , 0));
-        // Functionality
+        // Set an event handler for the ComboBox to handle when a worker is selected
         workerSelection.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println(workerSelection.valueProperty().get());
+                // Get the selected item from the ComboBox
+                String selectedName = workerSelection.getSelectionModel().getSelectedItem();
+                // Loop through the list of workers to find the worker whose name matches the selected item
+                for (Worker worker : workers) {
+                    if (selectedName.equals(worker.getFullName())) {
+                        System.out.println(worker.getId());
+                        break;
+                    }
+                }
             }
         });
 
@@ -78,12 +100,6 @@ public class HomeScreen {
         homeScreen.setStyle("-fx-background-color: transparent;");
 
         homeScreen.getChildren().addAll(homeContent, nurseImage, workerSelection);
-        // Test DB
-        try{
-            db = new Database();
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
     }
 
     public VBox createNavItem(String title){
