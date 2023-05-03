@@ -1,56 +1,122 @@
 package com.example.blooddonation.screens;
 
+import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
+import com.example.blooddonation.models.Hospital;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class HospitalsScreen {
     private StackPane hospitalScreen;
-
+    private BorderPane root;
     public Database db;
 
-    public HospitalsScreen(){
+    public HospitalsScreen(BorderPane rootBorderPane){
+        // Get borderPane from Application class
+        root = rootBorderPane;
         // StackPane to place image on top of content
         hospitalScreen = new StackPane();
         // Layout for Content
         BorderPane contentPane = new BorderPane();
 
+        // Connect to DB
+        try{
+            db = new Database();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         // Top part of layout
-        HBox top = new HBox();
+        StackPane top = new StackPane();
+        HBox topLeft = new HBox();
+        HBox topRight = new HBox();
+        topRight.setAlignment(Pos.TOP_RIGHT);
+        // Hospital Screen Label
+        Label hospitalLabel = new Label("Hospitals");
+        hospitalLabel.setStyle("-fx-font-family: 'Inter'; -fx-font-weight: bold; -fx-font-size: 20;");
+        hospitalLabel.setPadding(new Insets(10, 20, 10, 20));
+        topLeft.getChildren().add(hospitalLabel);
+
         // Button to return to Home Screen
         Button returnButton = new Button("Return");
-        top.getChildren().add(returnButton);
+        returnButton.setStyle("-fx-background-color: #FEE7ED; -fx-cursor: hand; -fx-border-width: 1px; -fx-border-color: black;");
+        returnButton.setPadding(new Insets(10, 20, 10, 20));
+        topRight.getChildren().add(returnButton);
+
+        // Set margins
+        HBox.setMargin(hospitalLabel, new Insets(0, 0, 0, 40));
+        HBox.setMargin(returnButton, new Insets(3, 80, 3, 0));
+
+        // Return onclick to home screen
+        returnButton.setOnAction(e -> root.setCenter(new HomeScreen(root).getHomeContent()));
+
+        top.getChildren().addAll(topLeft, topRight);
 
         // Main content
-        GridPane hospitalContent = new GridPane();
+        /// Tableview
+        TableView<Hospital> hospitalTable = new TableView<Hospital>();
+        // Table columns
+        TableColumn<Hospital, Integer> idColumn = new TableColumn<Hospital, Integer>("ID");
+        idColumn.setCellValueFactory(new PropertyValueFactory<Hospital, Integer>("id"));
 
-        Label lbl1 = new Label("Bravis 1");
-        Label lbl2 = new Label("Bravis 2");
-        Label lbl3 = new Label("Bravis 3");
+        TableColumn<Hospital, String> nameColumn = new TableColumn<Hospital, String>("Name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("name"));
 
-        hospitalContent.add(lbl1, 0, 0);
-        hospitalContent.add(lbl2, 0, 1);
-        hospitalContent.add(lbl3, 0, 2);
+        TableColumn<Hospital, String> cityColumn = new TableColumn<Hospital, String>("City");
+        cityColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("city"));
 
-        // Add layouts to borderpane
+        TableColumn<Hospital, String> adresColumn = new TableColumn<Hospital, String>("Adres");
+        adresColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("adres"));
+
+        TableColumn<Hospital, String> postalCodeColumn = new TableColumn<Hospital, String>("PostalCode");
+        postalCodeColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("postalCode"));
+
+        TableColumn<Hospital, String> phoneNumberColumn = new TableColumn<Hospital, String>("PhoneNumber");
+        phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("phoneNumber"));
+
+        TableColumn<Hospital, String> emailColumn = new TableColumn<Hospital, String>("Email");
+        emailColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("email"));
+
+        // Add columns to table
+        hospitalTable.getColumns().addAll(idColumn, nameColumn, cityColumn, adresColumn, postalCodeColumn, phoneNumberColumn, emailColumn);
+
+        // Get rid of empty column
+        hospitalTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+
+        try{
+            // Get data from Database
+            ResultSet rs = db.getHospitalData();
+            while (rs.next()){
+                // Create new object for each hospital
+                Hospital hospital = new Hospital(rs);
+                // Insert into table
+                hospitalTable.getItems().add(hospital);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Add elements/panes to borderpane
         contentPane.setTop(top);
-        contentPane.setCenter(hospitalContent);
+        contentPane.setCenter(hospitalTable);
 
-        hospitalScreen.getChildren().add(contentPane);
+        //Bottom Right image
+        ImageView nurseImage = new Application().getNurseImage();
 
-        // Bottom Right image
-        Image image = new Image(getClass().getResource("/images/Render_1.png").toExternalForm());
-        ImageView nurseImage = new ImageView(image);
-        // resize image, while keeping aspect ratio
-        nurseImage.setFitHeight(300);
-        nurseImage.setPreserveRatio(true);
+        hospitalScreen.getChildren().addAll(contentPane, nurseImage);
+        StackPane.setAlignment(nurseImage, Pos.BOTTOM_RIGHT);
     }
 
     public StackPane getHospitalScreen() {

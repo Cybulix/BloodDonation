@@ -5,5 +5,6 @@ module com.example.blooddonation {
 
 
     opens com.example.blooddonation to javafx.fxml;
+    opens com.example.blooddonation.models to javafx.base;
     exports com.example.blooddonation;
 }
