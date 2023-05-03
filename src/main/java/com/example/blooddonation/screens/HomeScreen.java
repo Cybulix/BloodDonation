@@ -2,6 +2,8 @@ package com.example.blooddonation.screens;
 
 import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
+import com.example.blooddonation.models.Worker;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,6 +17,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeScreen {
     private StackPane homeScreen;
@@ -24,11 +28,22 @@ public class HomeScreen {
     public HomeScreen(BorderPane rootBorderPane) {
         // Get borderPane from Application class/file
         root = rootBorderPane;
+
+        // Workers List
+        List<Worker> workers = new ArrayList<>();
+        workers.add(new Worker(1, "John", "Doe", "123-456-7890", "john.doe@example.com"));
+        workers.add(new Worker(2, "Jane", "Doe", "123-456-7891", "jane.doe@example.com"));
         // Worker selection box
         ComboBox<String> workerSelection = new ComboBox<>();
         workerSelection.setPromptText("Select current Worker");
-        ObservableList<String> workerList = workerSelection.getItems();
-        workerList.addAll("Worker 1", "Worker 2", "Worker 3", "Worker 4");
+        ObservableList<String> workersList = FXCollections.observableArrayList();
+        for (Worker worker : workers){
+            workersList.add(worker.getFullName());
+        }
+        // Add workers names to combobox
+        workerSelection.setItems(workersList);
+
+
         // Positioning
         StackPane.setAlignment(workerSelection, Pos.TOP_RIGHT);
         StackPane.setMargin(workerSelection, new Insets(10, 40, 0 , 0));
