@@ -2,8 +2,11 @@ package com.example.blooddonation.screens;
 
 import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,6 +23,14 @@ public class HomeScreen {
     public HomeScreen(BorderPane rootBorderPane) {
         // Get borderPane from Application class/file
         root = rootBorderPane;
+        // Worker selection box
+        ComboBox workerSelection = new ComboBox<>();
+        ObservableList<String> workerList = workerSelection.getItems();
+        workerList.addAll("Worker 1", "Worker 2", "Worker 3", "Worker 4");
+        // Positioning
+        StackPane.setAlignment(workerSelection, Pos.TOP_RIGHT);
+        StackPane.setMargin(workerSelection, new Insets(10, 60, 0 , 0));
+
         // HomeScreen with navigation items to another parts of app.
         homeContent = new HBox(100);
 //        homeScreen.setStyle("-fx-background-color: yellow");
@@ -42,7 +53,7 @@ public class HomeScreen {
         homeScreen.setAlignment(Pos.BOTTOM_RIGHT);
         homeScreen.setStyle("-fx-background-color: transparent;");
 
-        homeScreen.getChildren().addAll(homeContent, nurseImage);
+        homeScreen.getChildren().addAll(homeContent, nurseImage, workerSelection);
         // Test DB
         try{
             db = new Database();
