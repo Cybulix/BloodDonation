@@ -32,8 +32,8 @@ public class Hospital {
         this.name = result.getString("name");
         this.city = result.getString("city");
         this.adres = result.getString("adres");
-        this.postalCode = result.getString("postalcode");
-        this.phoneNumber = result.getString("phonenumber");
+        this.postalCode = result.getString("postalCode");
+        this.phoneNumber = result.getString("phoneNumber");
         this.email = result.getString("email");
     }
 
