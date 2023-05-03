@@ -56,4 +56,15 @@ public class Application extends javafx.application.Application {
     public static void main(String[] args) {
         launch();
     }
+
+    public ImageView getNurseImage(){
+        // Bottom Right image
+        Image image = new Image(getClass().getResource("/images/Render_1.png").toExternalForm());
+        ImageView nurseImage = new ImageView(image);
+        // resize image, while keeping aspect ratio
+        nurseImage.setFitHeight(300);
+        nurseImage.setPreserveRatio(true);
+
+        return nurseImage;
+    }
 }

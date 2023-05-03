@@ -1,11 +1,11 @@
 package com.example.blooddonation.screens;
 
+import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
 import com.example.blooddonation.models.Hospital;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,7 +15,6 @@ import javafx.scene.layout.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class HospitalsScreen {
     private StackPane hospitalScreen;
@@ -53,27 +52,27 @@ public class HospitalsScreen {
 
         // Main content
         /// Tableview
-        TableView hospitalTable = new TableView<Hospital>();
+        TableView<Hospital> hospitalTable = new TableView<Hospital>();
         // Table columns
-        TableColumn idColumn = new TableColumn<Hospital, Integer>("ID");
+        TableColumn<Hospital, Integer> idColumn = new TableColumn<Hospital, Integer>("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<Hospital, Integer>("id"));
 
-        TableColumn nameColumn = new TableColumn<Hospital, String>("Name");
+        TableColumn<Hospital, String> nameColumn = new TableColumn<Hospital, String>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("name"));
 
-        TableColumn cityColumn = new TableColumn<Hospital, String>("City");
+        TableColumn<Hospital, String> cityColumn = new TableColumn<Hospital, String>("City");
         cityColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("city"));
 
-        TableColumn adresColumn = new TableColumn<Hospital, String>("Adres");
+        TableColumn<Hospital, String> adresColumn = new TableColumn<Hospital, String>("Adres");
         adresColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("adres"));
 
-        TableColumn postalCodeColumn = new TableColumn<Hospital, String>("PostalCode");
+        TableColumn<Hospital, String> postalCodeColumn = new TableColumn<Hospital, String>("PostalCode");
         postalCodeColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("postalCode"));
 
-        TableColumn phoneNumberColumn = new TableColumn<Hospital, String>("PhoneNumber");
+        TableColumn<Hospital, String> phoneNumberColumn = new TableColumn<Hospital, String>("PhoneNumber");
         phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("phoneNumber"));
 
-        TableColumn emailColumn = new TableColumn<Hospital, String>("Email");
+        TableColumn<Hospital, String> emailColumn = new TableColumn<Hospital, String>("Email");
         emailColumn.setCellValueFactory(new PropertyValueFactory<Hospital, String>("email"));
 
         // Add columns to table
@@ -100,12 +99,8 @@ public class HospitalsScreen {
         contentPane.setTop(top);
         contentPane.setCenter(hospitalTable);
 
-        // Bottom Right image
-        Image image = new Image(getClass().getResource("/images/Render_1.png").toExternalForm());
-        ImageView nurseImage = new ImageView(image);
-        // resize image, while keeping aspect ratio
-        nurseImage.setFitHeight(300);
-        nurseImage.setPreserveRatio(true);
+        //Bottom Right image
+        ImageView nurseImage = new Application().getNurseImage();
 
         hospitalScreen.getChildren().addAll(contentPane, nurseImage);
         StackPane.setAlignment(nurseImage, Pos.BOTTOM_RIGHT);

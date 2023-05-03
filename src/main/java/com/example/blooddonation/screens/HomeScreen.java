@@ -1,5 +1,6 @@
 package com.example.blooddonation.screens;
 
+import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -35,11 +36,7 @@ public class HomeScreen {
         homeContent.getChildren().addAll(nav1, nav2, nav3);
 
         // Bottom Right image
-        Image image = new Image(getClass().getResource("/images/Render_1.png").toExternalForm());
-        ImageView nurseImage = new ImageView(image);
-        // resize image, while keeping aspect ratio
-        nurseImage.setFitHeight(300);
-        nurseImage.setPreserveRatio(true);
+        ImageView nurseImage = new Application().getNurseImage();
 
         homeScreen = new StackPane();
         homeScreen.setAlignment(Pos.BOTTOM_RIGHT);
