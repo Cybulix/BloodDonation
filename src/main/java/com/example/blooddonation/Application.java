@@ -35,7 +35,7 @@ public class Application extends javafx.application.Application {
         root.setTop(top);
 
         // Get first starting screen
-        root.setCenter(new HomeScreen(root).getHomeContent());
+        root.setCenter(new HomeScreen(this, root).getHomeContent());
 
         // Bottom of Screen
         HBox bottomPane = new HBox();

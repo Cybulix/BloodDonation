@@ -22,7 +22,7 @@ public class HospitalsScreen {
     private BorderPane root;
     public Database db;
 
-    public HospitalsScreen(BorderPane rootBorderPane){
+    public HospitalsScreen(Application app, BorderPane rootBorderPane){
         // Get borderPane from Application class
         root = rootBorderPane;
         // StackPane to place image on top of content
@@ -36,7 +36,7 @@ public class HospitalsScreen {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+        System.out.println(app.getSelectedWorkerId());
         // Top part of layout
         StackPane top = new StackPane();
         HBox topLeft = new HBox();
@@ -59,7 +59,7 @@ public class HospitalsScreen {
         HBox.setMargin(returnButton, new Insets(3, 80, 3, 0));
 
         // Return onclick to home screen
-        returnButton.setOnAction(e -> root.setCenter(new HomeScreen(root).getHomeContent()));
+        returnButton.setOnAction(e -> root.setCenter(new HomeScreen(app, root).getHomeContent()));
 
         top.getChildren().addAll(topLeft, topRight);
 

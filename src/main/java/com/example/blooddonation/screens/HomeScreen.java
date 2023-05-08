@@ -26,9 +26,12 @@ public class HomeScreen {
     private HBox homeContent;
     private BorderPane root;
     public Database db;
-    public HomeScreen(BorderPane rootBorderPane) {
+    private Application app;
+    public HomeScreen(Application rootApp, BorderPane rootBorderPane) {
         // Get borderPane from Application class/file
         root = rootBorderPane;
+
+        app = rootApp;
 
         // Workers List
         List<Worker> workers = new ArrayList<>();
@@ -70,7 +73,9 @@ public class HomeScreen {
                 // Loop through the list of workers to find the worker whose name matches the selected item
                 for (Worker worker : workers) {
                     if (selectedName.equals(worker.getFullName())) {
-                        System.out.println(worker.getId());
+//                        System.out.println(worker.getId());
+                        app.setSelectedWorkerId(worker.getId());
+                        System.out.println(app.getSelectedWorkerId());
                         break;
                     }
                 }
@@ -119,7 +124,7 @@ public class HomeScreen {
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                root.setCenter(new HospitalsScreen(root).getHospitalScreen());
+                root.setCenter(new HospitalsScreen(app, root).getHospitalScreen());
             }
         };
 
