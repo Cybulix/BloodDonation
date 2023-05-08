@@ -55,8 +55,13 @@ public class HomeScreen {
         ObservableList<Worker> workersList = FXCollections.observableArrayList(workers);
         // Add workers names to combobox
         workerSelection.setItems(workersList);
-
-
+        // Check if worker if selected, if so then show them in list.
+        for (Worker worker : workersList) {
+            if (worker.getId() == app.getSelectedWorkerId()) {
+                workerSelection.setValue(worker);
+                break;
+            }
+        }
         // Positioning
         StackPane.setAlignment(workerSelection, Pos.TOP_RIGHT);
         StackPane.setMargin(workerSelection, new Insets(10, 40, 0 , 0));
