@@ -11,14 +11,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.util.converter.DateStringConverter;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class DonorsScreen {
     private StackPane donorsScreen;
@@ -70,27 +72,34 @@ public class DonorsScreen {
         // TODO
         // Tableview
         TableView<Donor> donorTableView = new TableView<Donor>();
+        donorTableView.setEditable(true);
         // Table columns
         TableColumn<Donor, Integer> idColumn = new TableColumn<Donor, Integer>("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<Donor, Integer>("id"));
 
         TableColumn<Donor, String> firstNameColumn = new TableColumn<Donor, String>("First Name");
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("firstName"));
+        firstNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         TableColumn<Donor, String> lastNameColumn = new TableColumn<Donor, String>("Last Name");
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("lastName"));
+        lastNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         TableColumn<Donor, String> phoneNumberColumn = new TableColumn<Donor, String>("Phone Number");
         phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("phoneNumber"));
+        phoneNumberColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         TableColumn<Donor, String> emailColumn = new TableColumn<Donor, String>("Email");
         emailColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("email"));
+        emailColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        TableColumn<Donor, Date> birthDateColumn = new TableColumn<Donor, Date>("Birth Date");
+        TableColumn<Donor, java.util.Date> birthDateColumn = new TableColumn<Donor, java.util.Date>("Birth Date");
         birthDateColumn.setCellValueFactory(new PropertyValueFactory<Donor, Date>("birthDate"));
+        birthDateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
 
         TableColumn<Donor, String> bsnColumn = new TableColumn<Donor, String>("BSN");
         bsnColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("bsn"));
+        bsnColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         // Add columns to table
         donorTableView.getColumns().addAll(
