@@ -2,15 +2,20 @@ package com.example.blooddonation.screens;
 
 import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
+import com.example.blooddonation.models.Donor;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
+import java.sql.Date;
 import java.sql.SQLException;
 
 public class DonorsScreen {
@@ -61,10 +66,41 @@ public class DonorsScreen {
 
         // Main content
         // TODO
+        // Tableview
+        TableView<Donor> donorTableView = new TableView<Donor>();
+        // Table columns
+        TableColumn<Donor, Integer> idColumn = new TableColumn<Donor, Integer>("ID");
+        idColumn.setCellValueFactory(new PropertyValueFactory<Donor, Integer>("id"));
+
+        TableColumn<Donor, String> firstNameColumn = new TableColumn<Donor, String>("First Name");
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("firstName"));
+
+        TableColumn<Donor, String> lastNameColumn = new TableColumn<Donor, String>("Last Name");
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("lastName"));
+
+        TableColumn<Donor, String> phoneNumberColumn = new TableColumn<Donor, String>("Phone Number");
+        phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("phoneNumber"));
+
+        TableColumn<Donor, String> emailColumn = new TableColumn<Donor, String>("Email");
+        emailColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("email"));
+
+        TableColumn<Donor, Date> birthDateColumn = new TableColumn<Donor, Date>("Birth Date");
+        birthDateColumn.setCellValueFactory(new PropertyValueFactory<Donor, Date>("birthDate"));
+
+        TableColumn<Donor, String> bsnColumn = new TableColumn<Donor, String>("BSN");
+        bsnColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("bsn"));
+
+        // Add columns to table
+        donorTableView.getColumns().addAll(
+                idColumn, firstNameColumn, lastNameColumn,
+                phoneNumberColumn, emailColumn, birthDateColumn, bsnColumn);
+
+        // Get rid of empty column
+        donorTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // Add elements/panes to borderpane
         contentPane.setTop(top);
-//        contentPane.setCenter();
+        contentPane.setCenter(donorTableView);
 
         // Bottom Right image
         ImageView nurseImage = app.getNurseImage();
