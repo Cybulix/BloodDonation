@@ -54,7 +54,7 @@ public class DonorsScreen {
         HBox.setMargin(donorsLabel, new Insets(0, 0, 0, 40));
         HBox.setMargin(returnButton, new Insets(3, 80, 3, 0));
 
-        // Return onlick to home screen
+        // Return onclick to home screen
         returnButton.setOnAction(e -> root.setCenter(new HomeScreen(app, root).getHomeContent()));
 
         top.getChildren().addAll(topLeft, topRight);
