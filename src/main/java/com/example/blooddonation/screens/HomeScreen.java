@@ -26,7 +26,7 @@ public class HomeScreen {
     private HBox homeContent;
     private BorderPane root;
     public Database db;
-    private Application app;
+    private final Application app;
     public HomeScreen(Application rootApp, BorderPane rootBorderPane) {
         // Get borderPane from Application class/file
         root = rootBorderPane;
@@ -50,13 +50,9 @@ public class HomeScreen {
         }
 
         // Worker selection box
-        ComboBox<String> workerSelection = new ComboBox<>();
+        ComboBox<Worker> workerSelection = new ComboBox<>();
         workerSelection.setPromptText("Select current Worker");
-        ObservableList<String> workersList = FXCollections.observableArrayList();
-        // Loop through the list of workers and add their full names to the ObservableList
-        for (Worker worker : workers){
-            workersList.add(worker.getFullName());
-        }
+        ObservableList<Worker> workersList = FXCollections.observableArrayList(workers);
         // Add workers names to combobox
         workerSelection.setItems(workersList);
 
@@ -69,15 +65,12 @@ public class HomeScreen {
             @Override
             public void handle(ActionEvent actionEvent) {
                 // Get the selected item from the ComboBox
-                String selectedName = workerSelection.getSelectionModel().getSelectedItem();
+                Worker selectedWorker = workerSelection.getSelectionModel().getSelectedItem();
                 // Loop through the list of workers to find the worker whose name matches the selected item
-                for (Worker worker : workers) {
-                    if (selectedName.equals(worker.getFullName())) {
-//                        System.out.println(worker.getId());
-                        app.setSelectedWorkerId(worker.getId());
-                        System.out.println(app.getSelectedWorkerId());
-                        break;
-                    }
+                if (selectedWorker != null) {
+                    // Get the ID of the selected worker
+                    int selectedId = selectedWorker.getId();
+                    app.setSelectedWorkerId(selectedId);
                 }
             }
         });

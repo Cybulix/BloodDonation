@@ -58,6 +58,11 @@ public class Worker {
     public String getFullName(){
         return firstName + " " + lastName;
     }
+    @Override
+    // Return workers full name as string not object
+    public String toString() {
+        return firstName + " " + lastName;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;
