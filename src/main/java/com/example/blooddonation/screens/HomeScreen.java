@@ -88,15 +88,15 @@ public class HomeScreen {
 //        homeScreen.setHgap(100);
 
         // Nav items
-        VBox nav1 = createNavItem("Donors");
-        VBox nav2 = createNavItem("Blood Bags");
-        VBox nav3 = createNavItem("Hospitals");
+        VBox nav1 = createNavItem("Donors", "donors");
+        VBox nav2 = createNavItem("Blood Bags", "bloodbags");
+        VBox nav3 = createNavItem("Hospitals", "hospitals");
 
         // Add them to HBox
         homeContent.getChildren().addAll(nav1, nav2, nav3);
 
         // Bottom Right image
-        ImageView nurseImage = new Application().getNurseImage();
+        ImageView nurseImage = app.getNurseImage();
 
         homeScreen = new StackPane();
         homeScreen.setAlignment(Pos.BOTTOM_RIGHT);
@@ -105,7 +105,7 @@ public class HomeScreen {
         homeScreen.getChildren().addAll(homeContent, nurseImage, workerSelection);
     }
 
-    public VBox createNavItem(String title){
+    public VBox createNavItem(String title, String window){
         // New item
         VBox navItem = new VBox();
         navItem.setAlignment(Pos.CENTER);
@@ -122,7 +122,16 @@ public class HomeScreen {
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                root.setCenter(new HospitalsScreen(app, root).getHospitalScreen());
+                if(window == "donors"){
+                    root.setCenter(new DonorsScreen(app, root).getDonorsScreen());
+                }
+                else if(window == "bloodbags"){
+                    // Placeholder
+                    root.setCenter(new HospitalsScreen(app, root).getHospitalScreen());
+                }
+                else if(window == "hospitals"){
+                    root.setCenter(new HospitalsScreen(app, root).getHospitalScreen());
+                }
             }
         };
 
