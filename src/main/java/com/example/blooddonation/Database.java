@@ -25,4 +25,8 @@ public class Database {
     public ResultSet getWorkersData() throws SQLException{
         return stm.executeQuery("SELECT * FROM workers");
     }
+
+    public ResultSet getDonorsData() throws SQLException{
+        return stm.executeQuery("SELECT * FROM donors");
+    }
 }

@@ -3,6 +3,7 @@ package com.example.blooddonation.screens;
 import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
 import com.example.blooddonation.models.Donor;
+import com.example.blooddonation.models.Hospital;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -16,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DonorsScreen {
@@ -97,6 +99,19 @@ public class DonorsScreen {
 
         // Get rid of empty column
         donorTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        try{
+            // Get data from Database
+            ResultSet rs = db.getDonorsData();
+            while (rs.next()){
+                // Create new object for each hospital
+                Donor donor = new Donor(rs);
+                // Insert into table
+                donorTableView.getItems().add(donor);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         // Add elements/panes to borderpane
         contentPane.setTop(top);
