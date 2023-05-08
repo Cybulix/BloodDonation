@@ -15,6 +15,8 @@ import java.io.IOException;
 public class Application extends javafx.application.Application {
     public BorderPane root;
     public StackPane midPane;
+    private Integer selectedWorkerId = -1;
+
     @Override
     public void start(Stage stage) throws IOException {
         // New border pane for content
@@ -33,7 +35,7 @@ public class Application extends javafx.application.Application {
         root.setTop(top);
 
         // Get first starting screen
-        root.setCenter(new HomeScreen(root).getHomeContent());
+        root.setCenter(new HomeScreen(this, root).getHomeContent());
 
         // Bottom of Screen
         HBox bottomPane = new HBox();
@@ -66,5 +68,13 @@ public class Application extends javafx.application.Application {
         nurseImage.setPreserveRatio(true);
 
         return nurseImage;
+    }
+
+    public int getSelectedWorkerId(){
+        return selectedWorkerId;
+    }
+
+    public void setSelectedWorkerId(Integer newSelectedWorkerId){
+        this.selectedWorkerId = newSelectedWorkerId;
     }
 }
