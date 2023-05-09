@@ -4,6 +4,7 @@ import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
 import com.example.blooddonation.models.Donor;
 import com.example.blooddonation.models.Hospital;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -80,6 +81,22 @@ public class DonorsScreen {
         TableColumn<Donor, String> firstNameColumn = new TableColumn<Donor, String>("First Name");
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("firstName"));
         firstNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        // Perform on cell edit
+        firstNameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Donor, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Donor, String> donorStringCellEditEvent) {
+                // Get cell values
+                Donor donor = donorStringCellEditEvent.getRowValue();
+                // Save new value
+                donor.setFirstName(donorStringCellEditEvent.getNewValue());
+                System.out.println(donorStringCellEditEvent.getNewValue());
+                try {
+                    db.updateDonorData(donor.getId(), "firstName", donorStringCellEditEvent.getNewValue());
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
         TableColumn<Donor, String> lastNameColumn = new TableColumn<Donor, String>("Last Name");
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("lastName"));

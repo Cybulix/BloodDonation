@@ -29,4 +29,11 @@ public class Database {
     public ResultSet getDonorsData() throws SQLException{
         return stm.executeQuery("SELECT * FROM donors");
     }
+
+    public void updateDonorData(Integer id, String column, String newData) throws SQLException{
+        // Prepare query with placeholders
+        String query = String.format("UPDATE donors SET %s = '%s' WHERE `id` = %d", column, newData, id);
+        // Execute update query
+        stm.execute(query);
+    }
 }
