@@ -4,6 +4,7 @@ import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
 import com.example.blooddonation.models.Donor;
 import com.example.blooddonation.models.Hospital;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,12 +21,21 @@ import org.w3c.dom.Text;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class DonorsScreen {
     private StackPane donorsScreen;
     private BorderPane root;
     private Database db;
+
+    private TextField firstNameInput;
+    private TextField lastNameInput;
+    private TextField phoneNumberInput;
+    private TextField emailInput;
+    private TextField birthDateInput;
+    private TextField bsnInput;
 
     public DonorsScreen(Application app, BorderPane rootBorderPane){
         // Get borderPane from Application class
@@ -222,22 +232,40 @@ public class DonorsScreen {
         VBox.setMargin(botDown, new Insets(0, 0, 5, 10));
 //        botDown.setAlignment(Pos.CENTER);
 
-        TextField firstNameInput = new TextField();
+        firstNameInput = new TextField();
         firstNameInput.setPromptText("First Name");
-        TextField lastNameInput = new TextField();
+        lastNameInput = new TextField();
         lastNameInput.setPromptText("Last Name");
-        TextField phoneNumberInput = new TextField();
+        phoneNumberInput = new TextField();
         phoneNumberInput.setPromptText("Phone Number");
-        TextField emailInput = new TextField();
+        emailInput = new TextField();
         emailInput.setPromptText("Email");
-        TextField birthDateInput = new TextField();
+        birthDateInput = new TextField();
         birthDateInput.setPromptText("Format: YYYY-MM-DD");
-        TextField bsnInput = new TextField();
+        bsnInput = new TextField();
         bsnInput.setPromptText("BSN");
 
         Button addButton = new Button("Add");
         Button delButton = new Button("Delete");
 
+        addButton.setPrefWidth(100);
+        delButton.setPrefWidth(100);
+
+        addButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                LocalDate localDate = LocalDate.now();
+                java.sql.Date currTime = java.sql.Date.valueOf(localDate);
+
+                Donor donor = new Donor(96, firstNameInput.getText(), lastNameInput.getText(),
+                        phoneNumberInput.getText(), emailInput.getText(), currTime, bsnInput.getText());
+
+                donorTableView.getItems().add(donor);
+                clearInputs();
+            }
+        });
+
+        // Add elements do layouts
         botUp.getChildren().addAll(firstNameInput,lastNameInput,phoneNumberInput,emailInput,birthDateInput,bsnInput);
         botDown.getChildren().addAll(addButton, delButton);
 
@@ -257,5 +285,14 @@ public class DonorsScreen {
 
     public StackPane getDonorsScreen(){
         return donorsScreen;
+    }
+
+    private void clearInputs(){
+        firstNameInput.clear();
+        lastNameInput.clear();
+        phoneNumberInput.clear();
+        emailInput.clear();
+        birthDateInput.clear();
+        bsnInput.clear();
     }
 }
