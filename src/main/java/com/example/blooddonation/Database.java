@@ -36,4 +36,12 @@ public class Database {
         // Execute update query
         stm.execute(query);
     }
+
+    public Integer getNextID() throws SQLException{
+        ResultSet resultSet = stm.executeQuery("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'bravis' AND TABLE_NAME = 'donors'; ");
+        if (resultSet.next()){
+            return resultSet.getInt(1);
+        }
+        return null; // or handle the case where no result is found
+    }
 }

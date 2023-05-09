@@ -258,9 +258,16 @@ public class DonorsScreen {
                 // Swap date to working formats for table.
                 LocalDate localDate = LocalDate.now();
                 java.sql.Date currTime = java.sql.Date.valueOf(localDate);
+                Integer nextID;
+
+                try {
+                    nextID = db.getNextID();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
 
                 // Create new object with inserted data
-                Donor donor = new Donor(96, firstNameInput.getText(), lastNameInput.getText(),
+                Donor donor = new Donor(nextID, firstNameInput.getText(), lastNameInput.getText(),
                         phoneNumberInput.getText(), emailInput.getText(), currTime, bsnInput.getText());
 
                 donorTableView.getItems().add(donor);
