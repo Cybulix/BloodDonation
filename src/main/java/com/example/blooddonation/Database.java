@@ -30,6 +30,15 @@ public class Database {
         return stm.executeQuery("SELECT * FROM donors");
     }
 
+    public void createDonor(String firstName, String lastName, String phoneNumber, String email, String birthDate, String bsn) throws SQLException {
+        // Query with placeholders
+        String query = String.format("INSERT INTO `donors` (`firstName`, `lastName`, `phoneNumber`, `email`, `birthDate`, `bsn`) " +
+                        "VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
+                firstName, lastName, phoneNumber, email, birthDate, bsn);
+        System.out.println(query);
+        stm.execute(query);
+    }
+
     public void updateDonorData(Integer id, String column, String newData) throws SQLException{
         // Prepare query with placeholders
         String query = String.format("UPDATE donors SET %s = '%s' WHERE `id` = %d", column, newData, id);

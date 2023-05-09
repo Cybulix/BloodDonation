@@ -256,10 +256,13 @@ public class DonorsScreen {
             @Override
             public void handle(ActionEvent actionEvent) {
                 // Swap date to working formats for table.
-                LocalDate localDate = LocalDate.now();
-                java.sql.Date currTime = java.sql.Date.valueOf(localDate);
+                // Get birth Date from textInput
+                String birthDateString = birthDateInput.getText();
+                // Swap it do sql date
+                java.sql.Date birthDate = java.sql.Date.valueOf(birthDateString);
+                // Next ID
                 Integer nextID;
-
+                // Try to get nextID from DB
                 try {
                     nextID = db.getNextID();
                 } catch (SQLException e) {
@@ -268,7 +271,14 @@ public class DonorsScreen {
 
                 // Create new object with inserted data
                 Donor donor = new Donor(nextID, firstNameInput.getText(), lastNameInput.getText(),
-                        phoneNumberInput.getText(), emailInput.getText(), currTime, bsnInput.getText());
+                        phoneNumberInput.getText(), emailInput.getText(), birthDate, bsnInput.getText());
+
+                try{
+                    db.createDonor(firstNameInput.getText(), lastNameInput.getText(), phoneNumberInput.getText(),
+                            emailInput.getText(), birthDateString, bsnInput.getText());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
 
                 donorTableView.getItems().add(donor);
                 // Clear text fields
