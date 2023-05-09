@@ -36,7 +36,6 @@ public class Database {
         String query = String.format("INSERT INTO `donors` (`firstName`, `lastName`, `phoneNumber`, `email`, `birthDate`, `bsn`) " +
                         "VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
                 firstName, lastName, phoneNumber, email, birthDate, bsn);
-        System.out.println(query);
         stm.execute(query);
     }
 

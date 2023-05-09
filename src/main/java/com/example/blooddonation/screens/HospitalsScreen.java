@@ -35,7 +35,6 @@ public class HospitalsScreen {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(app.getSelectedWorkerId());
         // Top part of layout
         StackPane top = new StackPane();
         HBox topLeft = new HBox();
