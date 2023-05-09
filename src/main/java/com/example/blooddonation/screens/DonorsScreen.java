@@ -214,16 +214,26 @@ public class DonorsScreen {
 
         // Bottom part
         //  Bottom layouts
-        VBox bot = new VBox();
-        HBox botUp = new HBox();
-        HBox botDown = new HBox();
+        VBox bot = new VBox(5);
+        HBox botUp = new HBox(10);
+        HBox botDown = new HBox(10);
+
+        botUp.setPadding(new Insets(10, 0, 0 ,10));
+        VBox.setMargin(botDown, new Insets(0, 0, 5, 10));
+//        botDown.setAlignment(Pos.CENTER);
 
         TextField firstNameInput = new TextField();
+        firstNameInput.setPromptText("First Name");
         TextField lastNameInput = new TextField();
+        lastNameInput.setPromptText("Last Name");
         TextField phoneNumberInput = new TextField();
+        phoneNumberInput.setPromptText("Phone Number");
         TextField emailInput = new TextField();
+        emailInput.setPromptText("Email");
         TextField birthDateInput = new TextField();
+        birthDateInput.setPromptText("Format: YYYY-MM-DD");
         TextField bsnInput = new TextField();
+        bsnInput.setPromptText("BSN");
 
         Button addButton = new Button("Add");
         Button delButton = new Button("Delete");
