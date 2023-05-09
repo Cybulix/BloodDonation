@@ -7,17 +7,16 @@ import com.example.blooddonation.models.Hospital;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.util.converter.DateStringConverter;
+import org.w3c.dom.Text;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -213,9 +212,31 @@ public class DonorsScreen {
             throw new RuntimeException(e);
         }
 
+        // Bottom part
+        //  Bottom layouts
+        VBox bot = new VBox();
+        HBox botUp = new HBox();
+        HBox botDown = new HBox();
+
+        TextField firstNameInput = new TextField();
+        TextField lastNameInput = new TextField();
+        TextField phoneNumberInput = new TextField();
+        TextField emailInput = new TextField();
+        TextField birthDateInput = new TextField();
+        TextField bsnInput = new TextField();
+
+        Button addButton = new Button("Add");
+        Button delButton = new Button("Delete");
+
+        botUp.getChildren().addAll(firstNameInput,lastNameInput,phoneNumberInput,emailInput,birthDateInput,bsnInput);
+        botDown.getChildren().addAll(addButton, delButton);
+
+        bot.getChildren().addAll(botUp, botDown);
+
         // Add elements/panes to borderpane
         contentPane.setTop(top);
         contentPane.setCenter(donorTableView);
+        contentPane.setBottom(bot);
 
         // Bottom Right image
         ImageView nurseImage = app.getNurseImage();
