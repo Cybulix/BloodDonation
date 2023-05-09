@@ -160,7 +160,17 @@ public class DonorsScreen {
                 // Get cell values
                 Donor donor = donorDateCellEditEvent.getRowValue();
                 // Save new value
-                System.out.println(donorDateCellEditEvent.getNewValue());
+                // Create a java.util.Date object
+                Date utilDate = donorDateCellEditEvent.getNewValue();
+                // Convert java.util.Date to java.sql.Date
+                long timeInMillis = utilDate.getTime();
+                java.sql.Date sqlDate = new java.sql.Date(timeInMillis);
+                donor.setBirthDate(sqlDate);
+                try {
+                    db.updateDonorData(donor.getId(), "birthDate", sqlDate.toString());
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
