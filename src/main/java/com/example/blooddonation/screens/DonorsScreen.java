@@ -89,7 +89,6 @@ public class DonorsScreen {
                 Donor donor = donorStringCellEditEvent.getRowValue();
                 // Save new value
                 donor.setFirstName(donorStringCellEditEvent.getNewValue());
-                System.out.println(donorStringCellEditEvent.getNewValue());
                 try {
                     db.updateDonorData(donor.getId(), "firstName", donorStringCellEditEvent.getNewValue());
                 } catch (SQLException e) {
@@ -101,14 +100,56 @@ public class DonorsScreen {
         TableColumn<Donor, String> lastNameColumn = new TableColumn<Donor, String>("Last Name");
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("lastName"));
         lastNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        lastNameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Donor, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Donor, String> donorStringCellEditEvent) {
+                // Get cell values
+                Donor donor = donorStringCellEditEvent.getRowValue();
+                // Save new value
+                donor.setLastName(donorStringCellEditEvent.getNewValue());
+                try {
+                    db.updateDonorData(donor.getId(), "lastName", donorStringCellEditEvent.getNewValue());
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
         TableColumn<Donor, String> phoneNumberColumn = new TableColumn<Donor, String>("Phone Number");
         phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("phoneNumber"));
         phoneNumberColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        phoneNumberColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Donor, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Donor, String> donorStringCellEditEvent) {
+                // Get cell values
+                Donor donor = donorStringCellEditEvent.getRowValue();
+                // Save new value
+                donor.setPhoneNumber(donorStringCellEditEvent.getNewValue());
+                try {
+                    db.updateDonorData(donor.getId(), "phoneNumber", donorStringCellEditEvent.getNewValue());
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
         TableColumn<Donor, String> emailColumn = new TableColumn<Donor, String>("Email");
         emailColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("email"));
         emailColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        emailColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Donor, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Donor, String> donorStringCellEditEvent) {
+                // Get cell values
+                Donor donor = donorStringCellEditEvent.getRowValue();
+                // Save new value
+                donor.setEmail(donorStringCellEditEvent.getNewValue());
+                try {
+                    db.updateDonorData(donor.getId(), "email", donorStringCellEditEvent.getNewValue());
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
         TableColumn<Donor, java.util.Date> birthDateColumn = new TableColumn<Donor, java.util.Date>("Birth Date");
         birthDateColumn.setCellValueFactory(new PropertyValueFactory<Donor, Date>("birthDate"));
@@ -117,6 +158,20 @@ public class DonorsScreen {
         TableColumn<Donor, String> bsnColumn = new TableColumn<Donor, String>("BSN");
         bsnColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("bsn"));
         bsnColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        bsnColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Donor, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Donor, String> donorStringCellEditEvent) {
+                // Get cell values
+                Donor donor = donorStringCellEditEvent.getRowValue();
+                // Save new value
+                donor.setBsn(donorStringCellEditEvent.getNewValue());
+                try {
+                    db.updateDonorData(donor.getId(), "bsn", donorStringCellEditEvent.getNewValue());
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
         // Add columns to table
         donorTableView.getColumns().addAll(
