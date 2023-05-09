@@ -29,6 +29,7 @@ public class DonorsScreen {
     private StackPane donorsScreen;
     private BorderPane root;
     private Database db;
+    private TableView<Donor> donorTableView;
 
     private TextField firstNameInput;
     private TextField lastNameInput;
@@ -81,7 +82,7 @@ public class DonorsScreen {
         // Main content
         // TODO
         // Tableview
-        TableView<Donor> donorTableView = new TableView<Donor>();
+        donorTableView = new TableView<Donor>();
         donorTableView.setEditable(true);
         // Table columns
         TableColumn<Donor, Integer> idColumn = new TableColumn<Donor, Integer>("ID");
@@ -254,14 +255,25 @@ public class DonorsScreen {
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                // Swap date to working formats for table.
                 LocalDate localDate = LocalDate.now();
                 java.sql.Date currTime = java.sql.Date.valueOf(localDate);
 
+                // Create new object with inserted data
                 Donor donor = new Donor(96, firstNameInput.getText(), lastNameInput.getText(),
                         phoneNumberInput.getText(), emailInput.getText(), currTime, bsnInput.getText());
 
                 donorTableView.getItems().add(donor);
+                // Clear text fields
                 clearInputs();
+            }
+        });
+
+        delButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Integer selectedIndex = donorTableView.getSelectionModel().getSelectedIndex();
+                deleteDonor(selectedIndex);
             }
         });
 
@@ -287,6 +299,14 @@ public class DonorsScreen {
         return donorsScreen;
     }
 
+    public void deleteDonor(int selectedId){
+        System.out.println(selectedId);
+        if (selectedId >= 0){
+            donorTableView.getItems().remove(selectedId);
+            donorTableView.getSelectionModel().clearSelection();
+        }
+    }
+
     private void clearInputs(){
         firstNameInput.clear();
         lastNameInput.clear();
@@ -294,5 +314,6 @@ public class DonorsScreen {
         emailInput.clear();
         birthDateInput.clear();
         bsnInput.clear();
+        firstNameInput.requestFocus();
     }
 }
