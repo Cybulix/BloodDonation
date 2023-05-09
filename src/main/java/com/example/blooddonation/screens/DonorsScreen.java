@@ -154,6 +154,15 @@ public class DonorsScreen {
         TableColumn<Donor, java.util.Date> birthDateColumn = new TableColumn<Donor, java.util.Date>("Birth Date");
         birthDateColumn.setCellValueFactory(new PropertyValueFactory<Donor, Date>("birthDate"));
         birthDateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
+        birthDateColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Donor, Date>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Donor, Date> donorDateCellEditEvent) {
+                // Get cell values
+                Donor donor = donorDateCellEditEvent.getRowValue();
+                // Save new value
+                System.out.println(donorDateCellEditEvent.getNewValue());
+            }
+        });
 
         TableColumn<Donor, String> bsnColumn = new TableColumn<Donor, String>("BSN");
         bsnColumn.setCellValueFactory(new PropertyValueFactory<Donor, String>("bsn"));
