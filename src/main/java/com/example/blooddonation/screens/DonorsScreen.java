@@ -289,8 +289,13 @@ public class DonorsScreen {
         delButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Integer selectedIndex = donorTableView.getSelectionModel().getSelectedIndex();
-                deleteDonor(selectedIndex);
+                // Get cell values
+                // Table row ID
+                Integer selectedTableIndex = donorTableView.getSelectionModel().getSelectedIndex();
+                // DB item ID
+                Integer donorID = donorTableView.getSelectionModel().getSelectedItem().getId();
+
+                deleteDonor(selectedTableIndex, donorID);
             }
         });
 
@@ -316,10 +321,14 @@ public class DonorsScreen {
         return donorsScreen;
     }
 
-    public void deleteDonor(int selectedId){
-        System.out.println(selectedId);
-        if (selectedId >= 0){
-            donorTableView.getItems().remove(selectedId);
+    public void deleteDonor(int selectedTableId, Integer donorID){
+        if (selectedTableId >= 0){
+            donorTableView.getItems().remove(selectedTableId);
+            try {
+                db.deleteDonor(donorID);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             donorTableView.getSelectionModel().clearSelection();
         }
     }
