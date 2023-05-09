@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
@@ -18,7 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class HospitalsScreen {
-    private StackPane hospitalScreen;
+    private StackPane hospitalsScreen;
     private BorderPane root;
     public Database db;
 
@@ -26,7 +25,7 @@ public class HospitalsScreen {
         // Get borderPane from Application class
         root = rootBorderPane;
         // StackPane to place image on top of content
-        hospitalScreen = new StackPane();
+        hospitalsScreen = new StackPane();
         // Layout for Content
         BorderPane contentPane = new BorderPane();
 
@@ -36,7 +35,6 @@ public class HospitalsScreen {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(app.getSelectedWorkerId());
         // Top part of layout
         StackPane top = new StackPane();
         HBox topLeft = new HBox();
@@ -113,13 +111,13 @@ public class HospitalsScreen {
         contentPane.setCenter(hospitalTable);
 
         //Bottom Right image
-        ImageView nurseImage = new Application().getNurseImage();
+        ImageView nurseImage = app.getNurseImage();
 
-        hospitalScreen.getChildren().addAll(contentPane, nurseImage);
+        hospitalsScreen.getChildren().addAll(contentPane, nurseImage);
         StackPane.setAlignment(nurseImage, Pos.BOTTOM_RIGHT);
     }
 
     public StackPane getHospitalScreen() {
-        return hospitalScreen;
+        return hospitalsScreen;
     }
 }

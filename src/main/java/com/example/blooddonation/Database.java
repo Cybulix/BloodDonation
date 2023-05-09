@@ -25,4 +25,37 @@ public class Database {
     public ResultSet getWorkersData() throws SQLException{
         return stm.executeQuery("SELECT * FROM workers");
     }
+
+    public ResultSet getDonorsData() throws SQLException{
+        return stm.executeQuery("SELECT * FROM donors");
+    }
+
+    public void createDonor(String firstName, String lastName, String phoneNumber, String email, String birthDate, String bsn)
+            throws SQLException {
+        // Query with placeholders
+        String query = String.format("INSERT INTO `donors` (`firstName`, `lastName`, `phoneNumber`, `email`, `birthDate`, `bsn`) " +
+                        "VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
+                firstName, lastName, phoneNumber, email, birthDate, bsn);
+        stm.execute(query);
+    }
+
+    public void updateDonorData(Integer id, String column, String newData) throws SQLException{
+        // Prepare query with placeholders
+        String query = String.format("UPDATE donors SET %s = '%s' WHERE `id` = %d", column, newData, id);
+        // Execute update query
+        stm.execute(query);
+    }
+
+    public void deleteDonor(Integer id) throws SQLException {
+        String query = String.format("DELETE FROM `donors` WHERE id = %d", id);
+        stm.execute(query);
+    }
+
+    public Integer getNextID() throws SQLException{
+        ResultSet resultSet = stm.executeQuery("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'bravis' AND TABLE_NAME = 'donors'; ");
+        if (resultSet.next()){
+            return resultSet.getInt(1);
+        }
+        return null; // or handle the case where no result is found
+    }
 }
