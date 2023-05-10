@@ -69,4 +69,11 @@ public class Database {
                 "INNER JOIN hospitals\n" +
                 "ON hospitals.id = blood_bags.hospitalID");
     }
+
+    public void updateBloodBagData(Integer id, String column, String newData) throws SQLException{
+        // Prepare query with placeholders
+        String query = String.format("UPDATE `blood_bags` SET %s = '%s' WHERE `id` = %d", column, newData, id);
+        // Execute update query
+        stm.execute(query);
+    }
 }
