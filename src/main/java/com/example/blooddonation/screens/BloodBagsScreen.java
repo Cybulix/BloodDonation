@@ -36,6 +36,8 @@ public class BloodBagsScreen {
 
     private TextField bloodTypeInput;
     private TextField amountInput;
+    private ComboBox donorSelection;
+    private ComboBox hospitalSelection;
 
 
     public BloodBagsScreen(Application app, BorderPane rootBorderPane){
@@ -46,6 +48,8 @@ public class BloodBagsScreen {
         // Layout for Content
         BorderPane contentPane = new BorderPane();
 
+        // Donors List
+        List<Donor> donors = new ArrayList<>();
         // Workers List
         List<Worker> workers = new ArrayList<>();
         // Hospitals List
@@ -55,7 +59,7 @@ public class BloodBagsScreen {
         try{
             db = new Database();
 
-            // Get workers & hospitals data
+            // Get workers, donors & hospitals data
             ResultSet rsWorkers = db.getWorkersData();
             while (rsWorkers.next()){
                 // Create new object
@@ -63,10 +67,23 @@ public class BloodBagsScreen {
                 // Insert worker object into list
                 workers.add(worker);
             }
+            ResultSet rsDonors = db.getDonorsData();
+            while (rsDonors.next()){
+                Donor donor = new Donor(rsDonors);
+                donors.add(donor);
+            }
+
             ResultSet rsHospitals = db.getHospitalData();
             while (rsHospitals.next()){
                 Hospital hospital = new Hospital(rsHospitals);
                 hospitals.add(hospital);
+            }
+
+            // Example for later use
+            for(Worker worker : workers){
+                if(worker.getId() == app.getSelectedWorkerId()){
+                    System.out.println(worker.getFirstName() + " " + worker.getLastName());
+                }
             }
 
         } catch (SQLException e) {
