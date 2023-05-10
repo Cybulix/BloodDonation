@@ -58,4 +58,8 @@ public class Database {
         }
         return null; // or handle the case where no result is found
     }
+
+    public ResultSet getBloodBagsData() throws SQLException {
+        return stm.executeQuery("SELECT * FROM blood_bags");
+    }
 }

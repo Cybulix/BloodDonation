@@ -212,7 +212,7 @@ public class DonorsScreen {
             // Get data from Database
             ResultSet rs = db.getDonorsData();
             while (rs.next()){
-                // Create new object for each hospital
+                // Create new object for each donor
                 Donor donor = new Donor(rs);
                 // Insert into table
                 donorTableView.getItems().add(donor);

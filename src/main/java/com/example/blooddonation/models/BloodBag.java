@@ -5,13 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class BloodBag {
-    private int id;
+    private Integer id;
     private String bloodType;
-    private int amount;
+    private Integer amount;
     private Date date;
-    private int donorID;
+    private Integer donorID;
 
-    public BloodBag(int id, String bloodType, int amount, Date date, int donorID) {
+    public BloodBag(Integer id, String bloodType, Integer amount, Date date, Integer donorID) {
         this.id = id;
         this.bloodType = bloodType;
         this.amount = amount;
@@ -33,7 +33,7 @@ public class BloodBag {
         this.donorID = result.getInt("donorID");
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -49,7 +49,7 @@ public class BloodBag {
         this.bloodType = bloodType;
     }
 
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
@@ -65,7 +65,7 @@ public class BloodBag {
         this.date = date;
     }
 
-    public int getDonorID() {
+    public Integer getDonorID() {
         return donorID;
     }
 
