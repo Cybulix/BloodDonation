@@ -22,6 +22,7 @@ import org.w3c.dom.Text;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class BloodBagsScreen {
     private StackPane bloodScreen;
@@ -170,6 +171,30 @@ public class BloodBagsScreen {
         Button delButton = new Button("Delete");
         addButton.setPrefWidth(100);
         delButton.setPrefWidth(100);
+
+        addButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                // Get current Date
+                LocalDate currentDate = LocalDate.now();
+                Date currentSqlDate = Date.valueOf(currentDate);
+                // Next ID
+                Integer nextID;
+                // Try to get nextID from DB
+                try {
+                    nextID = db.getNextBloodBagID();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                // Create new object with inserted data
+                BloodBag bloodBag = new BloodBag(nextID, bloodTypeInput.getText(),
+                        Integer.valueOf(amountInput.getText()), currentSqlDate,
+                        1, app.getSelectedWorkerId(), 1);
+
+                bloodTableView.getItems().add(bloodBag);
+            }
+        });
 
         delButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override

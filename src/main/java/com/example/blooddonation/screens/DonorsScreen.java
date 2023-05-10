@@ -3,7 +3,6 @@ package com.example.blooddonation.screens;
 import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
 import com.example.blooddonation.models.Donor;
-import com.example.blooddonation.models.Hospital;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -17,12 +16,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.DateStringConverter;
-import org.w3c.dom.Text;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 
 public class DonorsScreen {
@@ -263,7 +259,7 @@ public class DonorsScreen {
                 Integer nextID;
                 // Try to get nextID from DB
                 try {
-                    nextID = db.getNextID();
+                    nextID = db.getNextDonorID();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

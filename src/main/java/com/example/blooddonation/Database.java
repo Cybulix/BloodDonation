@@ -51,7 +51,7 @@ public class Database {
         stm.execute(query);
     }
 
-    public Integer getNextID() throws SQLException{
+    public Integer getNextDonorID() throws SQLException{
         ResultSet resultSet = stm.executeQuery("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'bravis' AND TABLE_NAME = 'donors'; ");
         if (resultSet.next()){
             return resultSet.getInt(1);
@@ -80,5 +80,13 @@ public class Database {
     public void deleteBloodBag(Integer id) throws SQLException {
         String query = String.format("DELETE FROM `blood_bags` WHERE id = %d", id);
         stm.execute(query);
+    }
+
+    public Integer getNextBloodBagID() throws SQLException{
+        ResultSet resultSet = stm.executeQuery("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'bravis' AND TABLE_NAME = 'blood_bags'; ");
+        if (resultSet.next()){
+            return resultSet.getInt(1);
+        }
+        return null; // or handle the case where no result is found
     }
 }
