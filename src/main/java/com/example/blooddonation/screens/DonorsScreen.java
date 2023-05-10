@@ -231,6 +231,7 @@ public class DonorsScreen {
         VBox.setMargin(botDown, new Insets(0, 0, 5, 10));
 //        botDown.setAlignment(Pos.CENTER);
 
+        // Inputs
         firstNameInput = new TextField();
         firstNameInput.setPromptText("First Name");
         lastNameInput = new TextField();

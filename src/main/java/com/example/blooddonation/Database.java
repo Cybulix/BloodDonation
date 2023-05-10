@@ -76,4 +76,9 @@ public class Database {
         // Execute update query
         stm.execute(query);
     }
+
+    public void deleteBloodBag(Integer id) throws SQLException {
+        String query = String.format("DELETE FROM `blood_bags` WHERE id = %d", id);
+        stm.execute(query);
+    }
 }

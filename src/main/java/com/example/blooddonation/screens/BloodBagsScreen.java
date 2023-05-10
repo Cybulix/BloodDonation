@@ -4,6 +4,7 @@ import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
 import com.example.blooddonation.models.BloodBag;
 import com.example.blooddonation.models.Donor;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,7 +15,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.util.converter.IntegerStringConverter;
+import org.w3c.dom.Text;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -25,6 +28,10 @@ public class BloodBagsScreen {
     private BorderPane root;
     private Database db;
     private TableView<BloodBag> bloodTableView;
+
+    private TextField bloodTypeInput;
+    private TextField amountInput;
+
 
     public BloodBagsScreen(Application app, BorderPane rootBorderPane){
         // Get borderPane from Application class
@@ -67,7 +74,6 @@ public class BloodBagsScreen {
         top.getChildren().addAll(topLeft, topRight);
 
         // Main content
-        // TODO
         bloodTableView = new TableView<BloodBag>();
         bloodTableView.setEditable(true);
         // Table columns
@@ -146,10 +152,48 @@ public class BloodBagsScreen {
             throw new RuntimeException(e);
         }
 
+        // Bottom part
+        VBox bot = new VBox(5);
+        HBox botUp = new HBox(10);
+        HBox botDown = new HBox(10);
+
+        botUp.setPadding(new Insets(10, 0, 0 ,10));
+        VBox.setMargin(botDown, new Insets(0, 0, 5, 10));
+
+        // Inputs
+        bloodTypeInput = new TextField();
+        bloodTypeInput.setPromptText("Blood Type");
+        amountInput = new TextField();
+        amountInput.setPromptText("Amount Blood");
+
+        Button addButton = new Button("Add");
+        Button delButton = new Button("Delete");
+        addButton.setPrefWidth(100);
+        delButton.setPrefWidth(100);
+
+        delButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                // Get cell values
+                // Table row ID
+                Integer selectedTableIndex = bloodTableView.getSelectionModel().getSelectedIndex();
+                // DB item ID
+                Integer bloodBagID = bloodTableView.getSelectionModel().getSelectedItem().getId();
+
+                deleteDonor(selectedTableIndex, bloodBagID);
+            }
+        });
+
+        // Add elements do layouts
+        botUp.getChildren().addAll(bloodTypeInput, amountInput);
+        botDown.getChildren().addAll(addButton, delButton);
+
+        bot.getChildren().addAll(botUp, botDown);
 
         // Add elements/panes to borderpane
         contentPane.setTop(top);
         contentPane.setCenter(bloodTableView);
+        contentPane.setBottom(bot);
 
         // Bottom Right image
         ImageView nurseImage = app.getNurseImage();
@@ -160,4 +204,16 @@ public class BloodBagsScreen {
     }
 
     public StackPane getBloodScreen(){ return bloodScreen; }
+
+    public void deleteDonor(int selectedTableId, Integer donorID){
+        if (selectedTableId >= 0){
+            bloodTableView.getItems().remove(selectedTableId);
+            try {
+                db.deleteBloodBag(donorID);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            bloodTableView.getSelectionModel().clearSelection();
+        }
+    }
 }
