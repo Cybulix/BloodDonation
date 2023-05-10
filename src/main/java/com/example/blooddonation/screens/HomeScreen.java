@@ -127,7 +127,7 @@ public class HomeScreen {
                 }
                 else if(window == "bloodbags"){
                     // Placeholder
-                    root.setCenter(new HospitalsScreen(app, root).getHospitalScreen());
+                    root.setCenter(new BloodBagsScreen(app, root).getBloodScreen());
                 }
                 else if(window == "hospitals"){
                     root.setCenter(new HospitalsScreen(app, root).getHospitalScreen());

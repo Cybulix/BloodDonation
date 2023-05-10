@@ -52,7 +52,6 @@ public class DonorsScreen {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(app.getSelectedWorkerId());
         // Top part of layout
         StackPane top = new StackPane();
         HBox topLeft = new HBox();
@@ -80,7 +79,6 @@ public class DonorsScreen {
         top.getChildren().addAll(topLeft, topRight);
 
         // Main content
-        // TODO
         // Tableview
         donorTableView = new TableView<Donor>();
         donorTableView.setEditable(true);
