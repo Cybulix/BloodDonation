@@ -6,6 +6,8 @@ import com.example.blooddonation.models.BloodBag;
 import com.example.blooddonation.models.Donor;
 import com.example.blooddonation.models.Hospital;
 import com.example.blooddonation.models.Worker;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -207,6 +209,18 @@ public class BloodBagsScreen {
         bloodTypeInput.setPromptText("Blood Type");
         amountInput = new TextField();
         amountInput.setPromptText("Amount Blood");
+        // Selections
+        donorSelection = new ComboBox<>();
+        donorSelection.setPromptText("Select donor");
+        ObservableList<Donor> donorsList = FXCollections.observableArrayList(donors);
+        // TODO to string override
+        donorSelection.setItems(donorsList);
+
+        hospitalSelection = new ComboBox<>();
+        hospitalSelection.setPromptText("Select current hospital");
+        ObservableList<Hospital> hospitalsList = FXCollections.observableArrayList(hospitals);
+        // TODO to string override
+        hospitalSelection.setItems(hospitalsList);
 
         Button addButton = new Button("Add");
         Button delButton = new Button("Delete");
@@ -251,7 +265,7 @@ public class BloodBagsScreen {
         });
 
         // Add elements do layouts
-        botUp.getChildren().addAll(bloodTypeInput, amountInput);
+        botUp.getChildren().addAll(bloodTypeInput, amountInput, donorSelection, hospitalSelection);
         botDown.getChildren().addAll(addButton, delButton);
 
         bot.getChildren().addAll(botUp, botDown);
