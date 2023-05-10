@@ -4,6 +4,8 @@ import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
 import com.example.blooddonation.models.BloodBag;
 import com.example.blooddonation.models.Donor;
+import com.example.blooddonation.models.Hospital;
+import com.example.blooddonation.models.Worker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -23,6 +25,8 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BloodBagsScreen {
     private StackPane bloodScreen;
@@ -42,9 +46,29 @@ public class BloodBagsScreen {
         // Layout for Content
         BorderPane contentPane = new BorderPane();
 
+        // Workers List
+        List<Worker> workers = new ArrayList<>();
+        // Hospitals List
+        List<Hospital> hospitals = new ArrayList<>();
+
         // Connect to DB
         try{
             db = new Database();
+
+            // Get workers & hospitals data
+            ResultSet rsWorkers = db.getWorkersData();
+            while (rsWorkers.next()){
+                // Create new object
+                Worker worker = new Worker(rsWorkers);
+                // Insert worker object into list
+                workers.add(worker);
+            }
+            ResultSet rsHospitals = db.getHospitalData();
+            while (rsHospitals.next()){
+                Hospital hospital = new Hospital(rsHospitals);
+                hospitals.add(hospital);
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
