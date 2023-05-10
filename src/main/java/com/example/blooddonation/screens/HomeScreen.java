@@ -124,7 +124,12 @@ public class HomeScreen {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if(window == "donors"){
-                    root.setCenter(new DonorsScreen(app, root).getDonorsScreen());
+                    if (app.getSelectedWorkerId() == -1){
+                        showAlert();
+                    }
+                    else {
+                        root.setCenter(new DonorsScreen(app, root).getDonorsScreen());
+                    }
                 }
                 else if(window == "bloodbags"){
                     // Check if worker is selected
