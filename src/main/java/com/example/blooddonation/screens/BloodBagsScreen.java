@@ -61,6 +61,7 @@ public class BloodBagsScreen {
         // Main content
         // TODO
 
+
         // Add elements/panes to borderpane
         contentPane.setTop(top);
 

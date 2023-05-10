@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -126,8 +127,13 @@ public class HomeScreen {
                     root.setCenter(new DonorsScreen(app, root).getDonorsScreen());
                 }
                 else if(window == "bloodbags"){
-                    // Placeholder
-                    root.setCenter(new BloodBagsScreen(app, root).getBloodScreen());
+                    // Check if worker is selected
+                    if(app.getSelectedWorkerId() == -1){
+                        showAlert();
+                    }
+                    else{
+                        root.setCenter(new BloodBagsScreen(app, root).getBloodScreen());
+                    }
                 }
                 else if(window == "hospitals"){
                     root.setCenter(new HospitalsScreen(app, root).getHospitalScreen());
@@ -142,5 +148,14 @@ public class HomeScreen {
 
     public StackPane getHomeContent(){
         return homeScreen;
+    }
+
+    private void showAlert(){
+        // Show info via alert box
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Worker not selected!");
+        alert.setHeaderText("Worker not selected!");
+        alert.setContentText("Please select existing worker, and try to open this screen again.");
+        alert.show();
     }
 }
