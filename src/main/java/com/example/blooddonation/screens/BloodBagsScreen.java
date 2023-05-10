@@ -86,8 +86,15 @@ public class BloodBagsScreen {
         TableColumn<BloodBag, Integer> donorIDColumn = new TableColumn<BloodBag, Integer>("Donor ID");
         donorIDColumn.setCellValueFactory(new PropertyValueFactory<BloodBag, Integer>("donorID"));
 
+        TableColumn<BloodBag, String> workerNameColumn = new TableColumn<BloodBag, String>("Worker Name");
+        workerNameColumn.setCellValueFactory(new PropertyValueFactory<BloodBag, String>("workerName"));
+
+        TableColumn<BloodBag, String> hospitalNameColumn = new TableColumn<BloodBag, String>("Hospital Name");
+        hospitalNameColumn.setCellValueFactory(new PropertyValueFactory<BloodBag, String>("hospitalName"));
+
         // Add columns to table
-        bloodTableView.getColumns().addAll(idColumn, bloodTypeColumn, amountColumn, dateColumn, donorIDColumn);
+        bloodTableView.getColumns().addAll(idColumn, bloodTypeColumn, amountColumn, dateColumn,
+                donorIDColumn, workerNameColumn, hospitalNameColumn);
 
         // Get rid of empty column
         bloodTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

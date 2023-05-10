@@ -60,6 +60,13 @@ public class Database {
     }
 
     public ResultSet getBloodBagsData() throws SQLException {
-        return stm.executeQuery("SELECT * FROM blood_bags");
+        return stm.executeQuery("SELECT blood_bags.id, blood_bags.bloodType, blood_bags.amount, blood_bags.date, blood_bags.donorID, blood_bags.workerID, blood_bags.hospitalID, \n" +
+                "CONCAT(workers.firstName, ' ', workers.lastName) AS workerName,\n" +
+                "hospitals.name AS hospitalName\n" +
+                "FROM `blood_bags`\n" +
+                "INNER JOIN workers\n" +
+                "ON workers.id = blood_bags.workerID\n" +
+                "INNER JOIN hospitals\n" +
+                "ON hospitals.id = blood_bags.hospitalID");
     }
 }

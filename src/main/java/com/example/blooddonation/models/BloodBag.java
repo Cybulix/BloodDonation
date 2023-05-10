@@ -10,13 +10,19 @@ public class BloodBag {
     private Integer amount;
     private Date date;
     private Integer donorID;
+    private Integer workerID;
+    private String workerName;
+    private Integer hospitalID;
+    private String hospitalName;
 
-    public BloodBag(Integer id, String bloodType, Integer amount, Date date, Integer donorID) {
+    public BloodBag(Integer id, String bloodType, Integer amount, Date date, Integer donorID , Integer workerID, Integer hospitalID) {
         this.id = id;
         this.bloodType = bloodType;
         this.amount = amount;
         this.date = date;
         this.donorID = donorID;
+        this.workerID = workerID;
+        this.hospitalID = hospitalID;
     }
 
     /**
@@ -31,6 +37,8 @@ public class BloodBag {
         this.amount = result.getInt("amount");
         this.date = result.getDate("date");
         this.donorID = result.getInt("donorID");
+        this.workerName = result.getString("workerName");
+        this.hospitalName = result.getString("hospitalName");
     }
 
     public Integer getId() {
@@ -71,5 +79,37 @@ public class BloodBag {
 
     public void setDonorID(int donorID) {
         this.donorID = donorID;
+    }
+
+    public Integer getWorkerID() {
+        return workerID;
+    }
+
+    public void setWorkerID(Integer workerID) {
+        this.workerID = workerID;
+    }
+
+    public Integer getHospitalID() {
+        return hospitalID;
+    }
+
+    public void setHospitalID(Integer hospitalID) {
+        this.hospitalID = hospitalID;
+    }
+
+    public String getWorkerName() {
+        return workerName;
+    }
+
+    public void setWorkerName(String workerName) {
+        this.workerName = workerName;
+    }
+
+    public String getHospitalName() {
+        return hospitalName;
+    }
+
+    public void setHospitalName(String hospitalName) {
+        this.hospitalName = hospitalName;
     }
 }
