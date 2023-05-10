@@ -7,16 +7,14 @@ import com.example.blooddonation.models.Donor;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -98,6 +96,23 @@ public class BloodBagsScreen {
 
         TableColumn<BloodBag, Integer> amountColumn = new TableColumn<BloodBag, Integer>("Amount");
         amountColumn.setCellValueFactory(new PropertyValueFactory<BloodBag, Integer>("amount"));
+        amountColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+
+        amountColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<BloodBag, Integer>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<BloodBag, Integer> bloodBagIntegerCellEditEvent) {
+                // Get cell values
+                BloodBag bloodBag = bloodBagIntegerCellEditEvent.getRowValue();
+                // Save new value
+                bloodBag.setBloodType(String.valueOf(bloodBagIntegerCellEditEvent.getNewValue()));
+                // also in DB
+                try {
+                    db.updateBloodBagData(bloodBag.getId(), "amount", String.valueOf(bloodBagIntegerCellEditEvent.getNewValue()));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
         TableColumn<BloodBag, Date> dateColumn = new TableColumn<BloodBag, Date>("Date");
         dateColumn.setCellValueFactory(new PropertyValueFactory<BloodBag, Date>("date"));
