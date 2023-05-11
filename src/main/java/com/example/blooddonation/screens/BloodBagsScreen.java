@@ -272,6 +272,7 @@ public class BloodBagsScreen {
                         Integer.valueOf(amountInput.getText()), currentSqlDate, selectedDonorID, currentWorkerName , selectedHospitalName);
 
                 bloodTableView.getItems().add(bloodBag);
+                clearInputs();
             }
         });
 
@@ -319,5 +320,13 @@ public class BloodBagsScreen {
             }
             bloodTableView.getSelectionModel().clearSelection();
         }
+    }
+
+    private void clearInputs(){
+        bloodTypeInput.clear();
+        donorSelection.getSelectionModel().clearSelection();
+        hospitalSelection.getSelectionModel().clearSelection();
+        donorSelection.setPromptText("Select donor");
+        hospitalSelection.setPromptText("Select current hospital");
     }
 }
