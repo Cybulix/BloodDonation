@@ -324,6 +324,7 @@ public class BloodBagsScreen {
 
     private void clearInputs(){
         bloodTypeInput.clear();
+        amountInput.clear();
         donorSelection.getSelectionModel().clearSelection();
         hospitalSelection.getSelectionModel().clearSelection();
         donorSelection.setPromptText("Select donor");
