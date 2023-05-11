@@ -41,6 +41,9 @@ public class BloodBagsScreen {
     private ComboBox donorSelection;
     private ComboBox hospitalSelection;
     private String currentWorkerName;
+    private Integer selectedHospitalID;
+    private String selectedHospitalName;
+    private Integer selectedDonorID;
 
 
     public BloodBagsScreen(Application app, BorderPane rootBorderPane){
@@ -223,6 +226,27 @@ public class BloodBagsScreen {
         // TODO to string override
         hospitalSelection.setItems(hospitalsList);
 
+        donorSelection.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Donor selectedDonor = (Donor) donorSelection.getSelectionModel().getSelectedItem();
+                if (selectedDonor != null){
+                    selectedDonorID = selectedDonor.getId();
+                }
+            }
+        });
+        hospitalSelection.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Hospital selectedHospital = (Hospital) hospitalSelection.getSelectionModel().getSelectedItem();
+
+                if (selectedHospital != null){
+                    selectedHospitalID = selectedHospital.getId();
+                    selectedHospitalName = selectedHospital.getName();
+                }
+            }
+        });
+
         Button addButton = new Button("Add");
         Button delButton = new Button("Delete");
         addButton.setPrefWidth(100);
@@ -245,7 +269,7 @@ public class BloodBagsScreen {
 
                 // Create new object with inserted data
                 BloodBag bloodBag = new BloodBag(nextID, bloodTypeInput.getText(),
-                        Integer.valueOf(amountInput.getText()), currentSqlDate, 1, currentWorkerName , "Bravis");
+                        Integer.valueOf(amountInput.getText()), currentSqlDate, selectedDonorID, currentWorkerName , selectedHospitalName);
 
                 bloodTableView.getItems().add(bloodBag);
             }
