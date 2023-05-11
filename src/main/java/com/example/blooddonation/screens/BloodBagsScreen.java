@@ -40,6 +40,7 @@ public class BloodBagsScreen {
     private TextField amountInput;
     private ComboBox donorSelection;
     private ComboBox hospitalSelection;
+    private String currentWorkerName;
 
 
     public BloodBagsScreen(Application app, BorderPane rootBorderPane){
@@ -84,7 +85,7 @@ public class BloodBagsScreen {
             // Example for later use
             for(Worker worker : workers){
                 if(worker.getId() == app.getSelectedWorkerId()){
-                    System.out.println(worker.getFirstName() + " " + worker.getLastName());
+                    currentWorkerName = worker.getFirstName() + " " + worker.getLastName();
                 }
             }
 
@@ -244,8 +245,7 @@ public class BloodBagsScreen {
 
                 // Create new object with inserted data
                 BloodBag bloodBag = new BloodBag(nextID, bloodTypeInput.getText(),
-                        Integer.valueOf(amountInput.getText()), currentSqlDate,
-                        1, app.getSelectedWorkerId(), 1);
+                        Integer.valueOf(amountInput.getText()), currentSqlDate, 1, currentWorkerName , "Bravis");
 
                 bloodTableView.getItems().add(bloodBag);
             }

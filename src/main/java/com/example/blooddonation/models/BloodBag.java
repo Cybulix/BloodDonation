@@ -25,6 +25,16 @@ public class BloodBag {
         this.hospitalID = hospitalID;
     }
 
+    public BloodBag(Integer id, String bloodType, Integer amount, Date date, Integer donorID , String workerName, String hospitalName) {
+        this.id = id;
+        this.bloodType = bloodType;
+        this.amount = amount;
+        this.date = date;
+        this.donorID = donorID;
+        this.workerName = workerName;
+        this.hospitalName = hospitalName;
+    }
+
     /**
      * Blood bag constructor
      * @param result ResultSet

@@ -92,4 +92,10 @@ public class Hospital {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    // Return hospital name as string not object
+    public String toString() {
+        return name;
+    }
 }
