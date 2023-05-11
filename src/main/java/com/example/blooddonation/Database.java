@@ -70,6 +70,13 @@ public class Database {
                 "ON hospitals.id = blood_bags.hospitalID");
     }
 
+    public void createBloodBag(String bloodType, Integer amount, Integer donorID, Integer workerID, Integer hospitalID) throws SQLException{
+        String query = String.format("INSERT INTO `blood_bags` (`bloodType`, `amount`, `donorID`, `workerID`, `hospitalID`) " +
+                "VALUES ('%s', '%d', '%d', '%d', '%d')",
+                bloodType, amount, donorID, workerID, hospitalID);
+        stm.execute(query);
+    }
+
     public void updateBloodBagData(Integer id, String column, String newData) throws SQLException{
         // Prepare query with placeholders
         String query = String.format("UPDATE `blood_bags` SET %s = '%s' WHERE `id` = %d", column, newData, id);

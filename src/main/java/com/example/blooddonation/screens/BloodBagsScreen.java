@@ -271,6 +271,12 @@ public class BloodBagsScreen {
                 BloodBag bloodBag = new BloodBag(nextID, bloodTypeInput.getText(),
                         Integer.valueOf(amountInput.getText()), currentSqlDate, selectedDonorID, currentWorkerName , selectedHospitalName);
 
+                try {
+                    db.createBloodBag(bloodTypeInput.getText(), Integer.valueOf(amountInput.getText()), selectedDonorID, app.getSelectedWorkerId(), selectedHospitalID);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
                 bloodTableView.getItems().add(bloodBag);
                 clearInputs();
             }
