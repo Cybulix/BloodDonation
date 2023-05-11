@@ -93,4 +93,10 @@ public class Donor {
     public void setBsn(String bsn) {
         this.bsn = bsn;
     }
+
+    @Override
+    // Return donors full name as string not object
+    public String toString() {
+        return firstName + " " + lastName;
+    }
 }

@@ -51,8 +51,46 @@ public class Database {
         stm.execute(query);
     }
 
-    public Integer getNextID() throws SQLException{
+    public Integer getNextDonorID() throws SQLException{
         ResultSet resultSet = stm.executeQuery("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'bravis' AND TABLE_NAME = 'donors'; ");
+        if (resultSet.next()){
+            return resultSet.getInt(1);
+        }
+        return null; // or handle the case where no result is found
+    }
+
+    public ResultSet getBloodBagsData() throws SQLException {
+        return stm.executeQuery("SELECT blood_bags.id, blood_bags.bloodType, blood_bags.amount, blood_bags.date, blood_bags.donorID, blood_bags.workerID, blood_bags.hospitalID, \n" +
+                "CONCAT(workers.firstName, ' ', workers.lastName) AS workerName,\n" +
+                "hospitals.name AS hospitalName\n" +
+                "FROM `blood_bags`\n" +
+                "INNER JOIN workers\n" +
+                "ON workers.id = blood_bags.workerID\n" +
+                "INNER JOIN hospitals\n" +
+                "ON hospitals.id = blood_bags.hospitalID");
+    }
+
+    public void createBloodBag(String bloodType, Integer amount, Integer donorID, Integer workerID, Integer hospitalID) throws SQLException{
+        String query = String.format("INSERT INTO `blood_bags` (`bloodType`, `amount`, `donorID`, `workerID`, `hospitalID`) " +
+                "VALUES ('%s', '%d', '%d', '%d', '%d')",
+                bloodType, amount, donorID, workerID, hospitalID);
+        stm.execute(query);
+    }
+
+    public void updateBloodBagData(Integer id, String column, String newData) throws SQLException{
+        // Prepare query with placeholders
+        String query = String.format("UPDATE `blood_bags` SET %s = '%s' WHERE `id` = %d", column, newData, id);
+        // Execute update query
+        stm.execute(query);
+    }
+
+    public void deleteBloodBag(Integer id) throws SQLException {
+        String query = String.format("DELETE FROM `blood_bags` WHERE id = %d", id);
+        stm.execute(query);
+    }
+
+    public Integer getNextBloodBagID() throws SQLException{
+        ResultSet resultSet = stm.executeQuery("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'bravis' AND TABLE_NAME = 'blood_bags'; ");
         if (resultSet.next()){
             return resultSet.getInt(1);
         }

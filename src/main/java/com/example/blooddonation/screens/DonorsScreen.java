@@ -3,7 +3,6 @@ package com.example.blooddonation.screens;
 import com.example.blooddonation.Application;
 import com.example.blooddonation.Database;
 import com.example.blooddonation.models.Donor;
-import com.example.blooddonation.models.Hospital;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -17,12 +16,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.DateStringConverter;
-import org.w3c.dom.Text;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 
 public class DonorsScreen {
@@ -52,7 +48,6 @@ public class DonorsScreen {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(app.getSelectedWorkerId());
         // Top part of layout
         StackPane top = new StackPane();
         HBox topLeft = new HBox();
@@ -80,7 +75,6 @@ public class DonorsScreen {
         top.getChildren().addAll(topLeft, topRight);
 
         // Main content
-        // TODO
         // Tableview
         donorTableView = new TableView<Donor>();
         donorTableView.setEditable(true);
@@ -214,7 +208,7 @@ public class DonorsScreen {
             // Get data from Database
             ResultSet rs = db.getDonorsData();
             while (rs.next()){
-                // Create new object for each hospital
+                // Create new object for each donor
                 Donor donor = new Donor(rs);
                 // Insert into table
                 donorTableView.getItems().add(donor);
@@ -233,6 +227,7 @@ public class DonorsScreen {
         VBox.setMargin(botDown, new Insets(0, 0, 5, 10));
 //        botDown.setAlignment(Pos.CENTER);
 
+        // Inputs
         firstNameInput = new TextField();
         firstNameInput.setPromptText("First Name");
         lastNameInput = new TextField();
@@ -264,7 +259,7 @@ public class DonorsScreen {
                 Integer nextID;
                 // Try to get nextID from DB
                 try {
-                    nextID = db.getNextID();
+                    nextID = db.getNextDonorID();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
