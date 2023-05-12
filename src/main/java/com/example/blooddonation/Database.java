@@ -6,7 +6,7 @@ public class Database {
     private Connection conn;
     private Statement stm;
     public Database() throws SQLException{
-        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bravis?user=root&password=");
+        conn = DriverManager.getConnection("jdbc:mysql://adainforma.tk/bp2_bloeddonatie_gabriel?user=bloeddonatie_gabriel&password=)slzB1MtW-vZ7rzg");
         // Execute Query
         stm = conn.createStatement();
     }
@@ -52,7 +52,7 @@ public class Database {
     }
 
     public Integer getNextDonorID() throws SQLException{
-        ResultSet resultSet = stm.executeQuery("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'bravis' AND TABLE_NAME = 'donors'; ");
+        ResultSet resultSet = stm.executeQuery("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'bp2_bloeddonatie_gabriel' AND TABLE_NAME = 'donors'; ");
         if (resultSet.next()){
             return resultSet.getInt(1);
         }
@@ -90,7 +90,7 @@ public class Database {
     }
 
     public Integer getNextBloodBagID() throws SQLException{
-        ResultSet resultSet = stm.executeQuery("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'bravis' AND TABLE_NAME = 'blood_bags'; ");
+        ResultSet resultSet = stm.executeQuery("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'bp2_bloeddonatie_gabriel' AND TABLE_NAME = 'blood_bags'; ");
         if (resultSet.next()){
             return resultSet.getInt(1);
         }
